@@ -1,0 +1,171 @@
+fileFormatVersion: 2
+guid: bcff0cf1c4da1a54e9d76c3f6108654e
+timeCreated: 1475680897
+licenseType: Store
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Rig
+    100004: Rig1
+    100006: Rig1Gizmo
+    100008: Rig1Jaw
+    100010: Rig1JawGizmo
+    100012: Rig2
+    100014: Rig2Gizmo
+    100016: Rig2Jaw
+    100018: Rig2JawGizmo
+    100020: Rig3
+    100022: Rig3Gizmo
+    100024: Rig3Jaw
+    100026: Rig3JawGizmo
+    100028: RigMain
+    100030: RigMainGizmo
+    100032: Back Prop 04
+    100034: Dummy Prop Back
+    400000: //RootNode
+    400002: Rig
+    400004: Rig1
+    400006: Rig1Gizmo
+    400008: Rig1Jaw
+    400010: Rig1JawGizmo
+    400012: Rig2
+    400014: Rig2Gizmo
+    400016: Rig2Jaw
+    400018: Rig2JawGizmo
+    400020: Rig3
+    400022: Rig3Gizmo
+    400024: Rig3Jaw
+    400026: Rig3JawGizmo
+    400028: RigMain
+    400030: RigMainGizmo
+    400032: Back Prop 04
+    400034: Dummy Prop Back
+    4300000: Back Prop 04
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Back Prop 04
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Back Prop 04
+        weight: 1
+      - path: Dummy Prop Back
+        weight: 1
+      - path: Rig
+        weight: 1
+      - path: Rig1Gizmo
+        weight: 1
+      - path: Rig1JawGizmo
+        weight: 1
+      - path: Rig2Gizmo
+        weight: 1
+      - path: Rig2JawGizmo
+        weight: 1
+      - path: Rig3Gizmo
+        weight: 1
+      - path: Rig3JawGizmo
+        weight: 1
+      - path: RigMain
+        weight: 1
+      - path: RigMain/Rig1
+        weight: 1
+      - path: RigMain/Rig1/Rig1Jaw
+        weight: 1
+      - path: RigMain/Rig2
+        weight: 1
+      - path: RigMain/Rig2/Rig2Jaw
+        weight: 1
+      - path: RigMain/Rig3
+        weight: 1
+      - path: RigMain/Rig3/Rig3Jaw
+        weight: 1
+      - path: RigMainGizmo
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
