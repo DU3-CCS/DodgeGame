@@ -15,9 +15,17 @@ public class connectScene : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void loadSceneMainToFirst()
+    public void loadSceneLobby()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Lobby");
+    }
+    public void loadSceneInGame()
+    {
+        SceneManager.LoadScene("Lv1");
+    }
+    public void loadSceneSettingWindow()
+    {
+        SceneManager.LoadScene("SettingWindow");
     }
     public void Quit()
     {

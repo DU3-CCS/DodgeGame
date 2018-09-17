@@ -1,0 +1,236 @@
+fileFormatVersion: 2
+guid: b58f621c2d5c0ca449a2f2497e9a0222
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_0
+    21300002: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_1
+    21300004: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_2
+    21300006: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_3
+    21300008: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_4
+    21300010: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_5
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_0
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 3962
+        width: 2251
+        height: 2256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e901bc8897bc1949b6038f0214c83b1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_1
+      rect:
+        serializedVersion: 2
+        x: 2650
+        y: 3962
+        width: 1975
+        height: 2252
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdbea5bd25f610b4e8e4d982d0e880bc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_2
+      rect:
+        serializedVersion: 2
+        x: 5055
+        y: 3937
+        width: 1071
+        height: 2255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccbdd47ef706c82499b939680dfe240e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_3
+      rect:
+        serializedVersion: 2
+        x: 1220
+        y: 1258
+        width: 347
+        height: 2250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c116147c8291bc49bbeea19f4a6ffef
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_4
+      rect:
+        serializedVersion: 2
+        x: 2661
+        y: 1237
+        width: 1066
+        height: 2252
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a09bf4eb8f5544745a82435c02facb24
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kisspng-sprite-animation-2d-computer-graphics-coin-opengam-coins-5ab59c299fe6c9.302067811521851433655_5
+      rect:
+        serializedVersion: 2
+        x: 4262
+        y: 1272
+        width: 1966
+        height: 2253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b12168f38d4c59444acd7cbc5196c1eb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 81418f8a3f90f0d448370edc813867fa
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
