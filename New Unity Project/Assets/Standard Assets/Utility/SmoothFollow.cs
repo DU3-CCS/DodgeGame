@@ -4,10 +4,9 @@ namespace UnityStandardAssets.Utility
 {
     public class SmoothFollow : MonoBehaviour
     {
-
         // The target we are following
         [SerializeField]
-        private Transform target;
+        public Transform target;
         // The distance in the x-z plane to the target
         [SerializeField]
         private float distance = 10.0f;
@@ -21,14 +20,16 @@ namespace UnityStandardAssets.Utility
         private float heightDamping;
 
         // Use this for initialization
-        void Start() { }
-
+        void Start() {
+            
+        }
+            
         // Update is called once per frame
         void LateUpdate()
         {
-            // Early out if we don't have a target
+            // 타겟을 찾지 못했을 때 Player태그를 찾는다
             if (!target)
-                return;
+                 target = GameObject.FindWithTag("Player").transform;
 
             // Calculate the current rotation angles
             var wantedRotationAngle = target.eulerAngles.y;

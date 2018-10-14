@@ -33,12 +33,13 @@ public class PlayerMove : MonoBehaviour
         S1_coolTime = 0.0f;            //쿨타임 카운터
         S1_durationWaiting = 5;    //지속시간 
         S1_coolTimewaiting = 7;        //쿨타임
+
+        HPLabel = GameObject.Find("HPLabel").GetComponent<Text>();  //HPLabel 연결
     }
 
     // Update is called once per frame
     void FixedUpdate()
-    {
-        
+    {     
 
         //"Run" 애니메이션
         if (Input.GetKey(KeyCode.LeftArrow) ||
@@ -151,6 +152,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         //체력 관련
+
         if (HP == 3) HPLabel.text = "♥♥♥";
         else if (HP == 2) HPLabel.text = "♥♥♡";
         else if (HP == 1) HPLabel.text = "♥♡♡";

@@ -1212,9 +1212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76806479d916a64aa03f8e3eba7912f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 472557476}
+  target: {fileID: 0}
   distance: 50
-  height: 5
+  height: 0
   rotationDamping: 0
   heightDamping: 0
 --- !u!114 &282840816
