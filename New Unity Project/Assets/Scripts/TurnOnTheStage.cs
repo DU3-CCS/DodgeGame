@@ -12,6 +12,12 @@ public class TurnOnTheStage : MonoBehaviour {
     private Quaternion turn = Quaternion.identity;
     // 정의
     public static int charactorNum = 0;
+
+    public static bool charactor0_unlock = true;
+    public static bool charactor1_unlock = false;
+    public static bool charactor2_unlock = false;
+    public static bool charactor3_unlock = false;
+
     int value = 0;
 	// Use this for initialization
 	void Start () {
@@ -49,7 +55,13 @@ public class TurnOnTheStage : MonoBehaviour {
         // 각도를 잽니다.
         transform.rotation = Quaternion.Slerp(transform.rotation, turn, Time.deltaTime * 5.0f);
         // 돌립니다.
-	}
+
+        if (charactorNum == 0 && charactor0_unlock == false) GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(true);
+        else if (charactorNum == 1 && charactor1_unlock == false) GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(true);
+        else if (charactorNum == 2 && charactor2_unlock == false) GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(true);
+        else if (charactorNum == 3 && charactor3_unlock == false) GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(true);
+        else GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(false);
+    }
 
     public void turnLeft()
     {

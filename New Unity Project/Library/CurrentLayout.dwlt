@@ -71,7 +71,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 442}
   m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 54
+  controlID: 30
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 442}
   m_MaxSize: {x: 22012, y: 10021}
   vertical: 1
-  controlID: 158
+  controlID: 161
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 442}
   m_MaxSize: {x: 22012, y: 10021}
   vertical: 0
-  controlID: 159
+  controlID: 162
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_MinSize: {x: 438, y: 271}
   m_MaxSize: {x: 14008, y: 10021}
   vertical: 0
-  controlID: 105
+  controlID: 108
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -539,7 +539,7 @@ MonoBehaviour:
     height: 966
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
-    m_NameFilter: 
+    m_NameFilter: lock
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -549,21 +549,20 @@ MonoBehaviour:
     m_ScenePaths: []
     m_ShowAllHits: 0
     m_SearchArea: 1
-    m_Folders:
-    - Assets/Characters
+    m_Folders: []
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Characters
+  - Assets/Scripts
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\Unity\DodgeGame\New Unity Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 60390100
-    m_LastClickedID: 80224
-    m_ExpandedIDs: 000000000a2a000028580000bc690000b086000024900000f8c60000b8d000008cdd0000f40f010060390100b23c0100fe3d01007e42010008600100c6630100926a0100446e0100547a0100108401003a850100b08a0100c4a8010000ca9a3b
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 000000000a2a000028580000bc6900000e750000b086000024900000f8c60000b8d000008cdd0000f40f01004633010060390100b23c0100fe3d01007e42010008600100c6630100926a0100446e0100547a0100108401003a850100b08a0100c4a8010000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -619,7 +618,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c62300000c340000fcb40400922800009c310100c625020000000000fc330100765e0000323104002c310400ea2600006c6c0300
+    m_ExpandedInstanceIDs: c62300000c340000fcb40400922800009c310100c6250200fc330100765e0000323104002c310400ea2600006c6c0300f6ef0000280b01007a8b010000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -707,9 +706,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 1091ffffe6fbffff00000000d0980100109a0100429b01009ec101000ac80100
+    m_SelectedIDs: faba0200
+    m_LastClickedID: 178938
+    m_ExpandedIDs: f2fdf8ff0e1ff9ff5896f9ff24fdf9ff7696faffca1afbff201efcff84c1ffffe6fbffff00000000b498010054b201009cb20100e0b3010010b501006eb501000cbb020036bb020022bc020036bc0200
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -728,7 +727,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 13}
     m_SearchString: 
   m_ExpandedScenes:
-  - Lv1
+  - Lobby
   m_CurrenRootInstanceID: 0
   m_LockTracker:
     m_IsLocked: 0
@@ -759,14 +758,14 @@ MonoBehaviour:
     height: 494
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 5115.91620340102
-  m_2DMode: 1
+  lastFramingTime: 11376.281274478995
+  m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 271.70102, y: 93.0781, z: 145.875}
+    m_Target: {x: 421.7963, y: 103.1564, z: 257.87555}
     speed: 2
-    m_Value: {x: 271.70102, y: 93.0781, z: 145.875}
+    m_Value: {x: 421.7963, y: 103.1564, z: 257.87555}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -786,27 +785,27 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
     yGrid:
-      m_Target: 0
-      speed: 2
-      m_Value: 0
-    zGrid:
       m_Target: 1
       speed: 2
       m_Value: 1
+    zGrid:
+      m_Target: 0
+      speed: 2
+      m_Value: 0
   m_Rotation:
-    m_Target: {x: 0, y: 0, z: 0, w: 1}
+    m_Target: {x: 0.1896038, y: 0.022976547, z: -0.0044380766, w: 0.9815818}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 1}
+    m_Value: {x: 0.1896038, y: 0.022976547, z: -0.0044380766, w: 0.9815818}
   m_Size:
-    m_Target: 983.354
+    m_Target: 1134.7493
     speed: 2
-    m_Value: 983.354
+    m_Value: 1134.7493
   m_Ortho:
-    m_Target: 1
+    m_Target: 0
     speed: 2
-    m_Value: 1
+    m_Value: 0
   m_ShowGlobalGrid: 1
-  m_LastSceneViewRotation: {x: -0.21503647, y: -0.14817874, z: 0.0330281, w: -0.9647339}
+  m_LastSceneViewRotation: {x: 0.24370244, y: -0.031123158, z: 0.00782483, w: 0.969319}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -912,7 +911,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 62
-    y: 668
-    width: 839
-    height: 390
+    y: 607
+    width: 892
+    height: 451
   m_PersistentViewDataDictionary: {fileID: 0}
