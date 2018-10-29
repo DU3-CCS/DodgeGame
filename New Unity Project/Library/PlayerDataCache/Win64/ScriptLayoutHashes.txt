@@ -10,6 +10,7 @@ Assets/Scenes/Lobby.unity
 Assets/Scenes/SettingsWindow.unity
 SceneListEnd?
 c422dd62785a6d0afa870fbd111886ce Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
+da782a89cd0ecbc938d43db46809aac8 Assembly-CSharp.dll:.CameraFollow
 7b803eb2910e9b4cd5e521ae07b9f7d6 Unity.TextMeshPro.dll:TMPro.TMP_Dropdown
 486cd95c82d8305219c352c06b776e1f UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 9e61f3535f3c55760a1cedfbd114f4af UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -180,6 +181,7 @@ aac9c55ae7ba4b95b852a7d9c191acd1 Unity.TextMeshPro.dll:TMPro.TextMeshProUGUI
 b971a106988ebd6fca12c15c3cd91059 Assembly-CSharp.dll:.EnemyMove
 8ef426617b610e7fb46c13a109c74623 Assembly-CSharp.dll:.PlayerMove
 e04611b8715e6833d2bd7010fc6be10b Unity.TextMeshPro.dll:TMPro.TMP_StyleSheet
+a68f58958cd4d461b393a097131d08eb Assembly-CSharp.dll:.EnemyMoveLevel
 2f9af06a78208a67db480e9bfed4a076 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 9318334b30e9f195f573b2ce00154b95 Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 38119f14bef9d49f54f8e7c465225e68 Assembly-CSharp.dll:.DatabaseManager

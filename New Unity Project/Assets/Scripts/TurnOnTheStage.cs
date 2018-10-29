@@ -11,8 +11,9 @@ public class TurnOnTheStage : MonoBehaviour {
     bool bTurnRight = false;
     private Quaternion turn = Quaternion.identity;
     // 정의
-    public static int charactorNum = 0;
+    public static int charactorNum = 0; //캐릭터 바꾸는 변수
 
+    /* 직업 언락 변수 */
     public static bool charactor0_unlock = true;
     public static bool charactor1_unlock = false;
     public static bool charactor2_unlock = false;
