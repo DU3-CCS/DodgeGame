@@ -69,9 +69,9 @@ public class TurnOnTheStage : MonoBehaviour {
 		if(bTurnLeft)
         {
             Debug.Log("Left");
-            charactorNum++;
-            if (charactorNum == 4)
-                charactorNum = 0;
+            charactorNum--;
+            if (charactorNum == -1)
+                charactorNum = 3;
             value -= 90;
             // 각도를 90도 뺍니다.
             bTurnLeft = false;
@@ -81,9 +81,9 @@ public class TurnOnTheStage : MonoBehaviour {
         if(bTurnRight)
         {
             Debug.Log("Right");
-            charactorNum--;
-            if (charactorNum == -1)
-                charactorNum = 3;
+            charactorNum++;
+            if (charactorNum == 4)
+                charactorNum = 0;
             value += 90;
             // 각도를 90도 더합니다.
             bTurnRight = false;

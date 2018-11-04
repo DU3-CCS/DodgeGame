@@ -10355,9 +10355,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sHero:
   - {fileID: 1755739356701318, guid: 478ba571fb1236e4a994257b07a6da42, type: 2}
-  - {fileID: 1593361847045810, guid: 4d1eefba918a584469c669104269ac08, type: 2}
-  - {fileID: 1075910794526838, guid: 7ceff15c5af47e842a4f0a625a9868c7, type: 2}
   - {fileID: 1086074222941730, guid: da1315e7bd4e81840aa2367e40bf7ba1, type: 2}
+  - {fileID: 1075910794526838, guid: 7ceff15c5af47e842a4f0a625a9868c7, type: 2}
+  - {fileID: 1593361847045810, guid: 4d1eefba918a584469c669104269ac08, type: 2}
 --- !u!1001 &1718118740
 Prefab:
   m_ObjectHideFlags: 0
