@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
         S1_duration = 0.0f;         //지속시간 카운터
         S1_coolTime = 0.0f;         //쿨타임 카운터
         S1_durationWaiting = 5;     //지속시간 
-        S1_coolTimewaiting = 7;     //쿨타임
+        S1_coolTimewaiting = 20;     //쿨타임
 
         ShowDamage = 0.0f;         //데미지 이미지 카운터
         ShowDamageWaiting = 0.5f;     //데미지 이미지 지속시간 
@@ -44,19 +44,11 @@ public class PlayerMove : MonoBehaviour
         HPLabel = GameObject.Find("HPLabel").GetComponent<Text>();  //HPLabel 연결
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {     
 
-        //"Run" 애니메이션
-        if (Input.GetKey(KeyCode.LeftArrow) ||
-            Input.GetKey(KeyCode.RightArrow) ||
-            Input.GetKey(KeyCode.UpArrow) ||
-            Input.GetKey(KeyCode.DownArrow))
-        {
-            animator.SetBool("Run", true);
-        }
-        else animator.SetBool("Run", false);
+    private void Update()
+    {
+        //방향키 조작
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) { moveControl(); }
 
         // Dash Skill
         if (skill_01_Available == true) //스킬 활성화 일 때
@@ -69,7 +61,6 @@ public class PlayerMove : MonoBehaviour
                 skill_01_Available = false;     //스킬 활성화
                 S1_duration = 0;
                 S1_coolTime = 0;
-
             }
         }
         else
@@ -90,6 +81,32 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
+        //체력 관련
+
+        if (HP == 3) HPLabel.text = "♥♥♥";
+        else if (HP == 2) HPLabel.text = "♥♥♡";
+        else if (HP == 1) HPLabel.text = "♥♡♡";
+
+        //체력 0이하일시 팝업 씬으로 이동
+        if (HP <= 0) { SceneManager.LoadScene("PopUp"); }
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {     
+
+        //"Run" 애니메이션
+        if (Input.GetKey(KeyCode.LeftArrow) ||
+            Input.GetKey(KeyCode.RightArrow) ||
+            Input.GetKey(KeyCode.UpArrow) ||
+            Input.GetKey(KeyCode.DownArrow))
+        {
+            animator.SetBool("Run", true);
+        }
+        else animator.SetBool("Run", false);
+
+        
+
         // ShowDamage
         if (ShowDamage_Available == true) //스킬 활성화 일 때
         {
@@ -103,20 +120,6 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-        //방향키 조작
-        if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
-        {
-            moveControl();
-        }
-
-        //체력 관련
-
-        if (HP == 3) HPLabel.text = "♥♥♥";
-        else if (HP == 2) HPLabel.text = "♥♥♡";
-        else if (HP == 1) HPLabel.text = "♥♡♡";
-
-        //체력 0이하일시 팝업 씬으로 이동
-        if (HP <= 0) { SceneManager.LoadScene("PopUp"); }
     }
 
   
@@ -147,7 +150,7 @@ public class PlayerMove : MonoBehaviour
         {
             if(HP < 3) HP += 1;
             Destroy(other.gameObject);
-            Debug.Log("사과!");
+            Debug.Log("바나나!");
 
         }
         if (other.gameObject.tag == "item28")

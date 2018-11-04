@@ -544,7 +544,6 @@ GameObject:
   - component: {fileID: 95860990841303700}
   - component: {fileID: 54837080475550136}
   - component: {fileID: 136691387913199850}
-  - component: {fileID: 114892641271649194}
   - component: {fileID: 114561096643962588}
   m_Layer: 0
   m_Name: Adventurer Male 01
@@ -1489,20 +1488,10 @@ MonoBehaviour:
   S1_coolTime: 0
   S1_durationWaiting: 0
   S1_coolTimewaiting: 0
+  ShowDamage: 0
+  ShowDamageWaiting: 0
   animator: {fileID: 0}
   MoveSpeed: 20
---- !u!114 &114892641271649194
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1755739356701318}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bb74b0a3b2f9fa49b820f9ea3b0d7f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveSpeed: 1
 --- !u!136 &136691387913199850
 CapsuleCollider:
   m_ObjectHideFlags: 1
