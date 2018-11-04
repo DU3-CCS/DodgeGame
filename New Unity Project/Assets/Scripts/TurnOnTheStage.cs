@@ -16,7 +16,7 @@ public class TurnOnTheStage : MonoBehaviour {
     string strMoney = "";
     public Text Text_ResourceAmount;
     // 정의
-    public static int charactorNum = 0; //캐릭터 바꾸는 변수
+    public static int characterNum = 0; //캐릭터 바꾸는 변수
 
     // 직업 언락 변수
     public static bool[] charactor_unlock = { true, true, true, true };
@@ -69,26 +69,26 @@ public class TurnOnTheStage : MonoBehaviour {
 		if(bTurnLeft)
         {
             Debug.Log("Left");
-            charactorNum--;
-            if (charactorNum == -1)
-                charactorNum = 3;
+            characterNum--;
+            if (characterNum == -1)
+                characterNum = 3;
             value -= 90;
             // 각도를 90도 뺍니다.
             bTurnLeft = false;
             // 부울 변수를 취소합니다.
-            Debug.Log(charactorNum);
+            Debug.Log(characterNum);
         }
         if(bTurnRight)
         {
             Debug.Log("Right");
-            charactorNum++;
-            if (charactorNum == 4)
-                charactorNum = 0;
+            characterNum++;
+            if (characterNum == 4)
+                characterNum = 0;
             value += 90;
             // 각도를 90도 더합니다.
             bTurnRight = false;
             // 부울 변수를 취소합니다.
-            Debug.Log(charactorNum);
+            Debug.Log(characterNum);
         }
         turn.eulerAngles = new Vector3(0, value, 0);
         // 각도를 잽니다.
@@ -96,7 +96,7 @@ public class TurnOnTheStage : MonoBehaviour {
         // 돌립니다.
 
         //선택한 캐릭터 번호가 언락 상태인지 체크
-        if(charactor_unlock[charactorNum])
+        if(charactor_unlock[characterNum])
         {
             GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(true);
         }

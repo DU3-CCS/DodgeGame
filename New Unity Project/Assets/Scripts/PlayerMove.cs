@@ -9,11 +9,16 @@ public class PlayerMove : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
     public Text HPLabel;
-    public int HP = 3;
-    public float S1_duration;
-    public float S1_coolTime;
-    public int S1_durationWaiting;
-    public int S1_coolTimewaiting;
+    public Image skill_01_image, skill_02_image, skill_03_image, skill_04_image = null;
+
+    public int HP;
+
+    public float S1_duration, S2_duration, S3_duration, S4_duration = 0.0f;         //지속시간 카운터
+    public float S1_coolTime, S2_coolTime, S3_coolTime, S4_coolTime = 0.0f;         //쿨타임 카운터
+    public float S1_leftTime, S2_leftTime, S3_leftTime, S4_leftTime;
+    public int S1_durationWaiting, S2_durationWaiting, S3_durationWaiting, S4_durationWaiting;
+    public int S1_coolTimeWaiting, S2_coolTimeWaiting, S3_coolTimeWaiting, S4_coolTimeWaiting;
+
     public float ShowDamage;
     public float ShowDamageWaiting;
 
@@ -24,6 +29,8 @@ public class PlayerMove : MonoBehaviour
 
     private bool skill_01_Available = true;
     private bool skill_02_Available = true;
+    private bool skill_03_Available = true;
+    private bool skill_04_Available = true;
 
     private bool ShowDamage_Available = true;
 
@@ -33,56 +40,95 @@ public class PlayerMove : MonoBehaviour
         animator.SetBool("Dash", false);
         animator.SetBool("Defend", false);
 
-        S1_duration = 0.0f;         //지속시간 카운터
-        S1_coolTime = 0.0f;         //쿨타임 카운터
-        S1_durationWaiting = 5;     //지속시간 
-        S1_coolTimewaiting = 20;     //쿨타임
+        S1_durationWaiting = 2;     //지속시간 
+        S1_coolTimeWaiting = 5;     //쿨타임
+        S1_leftTime = S1_coolTimeWaiting;
+
+        S2_durationWaiting = 2;     //지속시간 
+        S2_coolTimeWaiting = 5;     //쿨타임
+        S2_leftTime = S2_coolTimeWaiting;
+
+        S3_durationWaiting = 2;     //지속시간 
+        S3_coolTimeWaiting = 5;     //쿨타임
+        S3_leftTime = S3_coolTimeWaiting;
+
+        S4_durationWaiting = 2;     //지속시간 
+        S4_coolTimeWaiting = 5;     //쿨타임
+        S4_leftTime = S4_coolTimeWaiting;
 
         ShowDamage = 0.0f;         //데미지 이미지 카운터
         ShowDamageWaiting = 0.5f;     //데미지 이미지 지속시간 
 
-        HPLabel = GameObject.Find("HPLabel").GetComponent<Text>();  //HPLabel 연결
+        //HP 설정
+        if (TurnOnTheStage.characterNum == 0)
+        {
+            HP = 3;
+        }
+        else if (TurnOnTheStage.characterNum == 1)
+        {
+            HP = 4;
+        }
+        else if (TurnOnTheStage.characterNum == 2)
+        {
+            HP = 2;
+        }
+        else if (TurnOnTheStage.characterNum == 3)
+        {
+            HP = 1;
+        }
+
+        HPLabel = GameObject.Find("HPLabel").GetComponent<Text>();          //HPLabel 연결
+
+        if (TurnOnTheStage.characterNum == 0)
+        {
+            skill_01_image = GameObject.Find("Skill_Dash").GetComponent<Image>();
+            skill_01_image.fillAmount = 1;
+        }
+        else if (TurnOnTheStage.characterNum == 1)
+        {
+            skill_02_image = GameObject.Find("Skill_Slow").GetComponent<Image>();
+            skill_02_image.fillAmount = 1;
+        }
+        else if (TurnOnTheStage.characterNum == 2)
+        {
+            skill_03_image = GameObject.Find("Skill_Defend").GetComponent<Image>();
+            skill_03_image.fillAmount = 1;
+        }
+        else if (TurnOnTheStage.characterNum == 3)
+        {
+            skill_04_image = GameObject.Find("Skill_Stun").GetComponent<Image>();
+            skill_04_image.fillAmount = 1;
+        }
     }
 
-
+    
     private void Update()
     {
         //방향키 조작
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) { moveControl(); }
-
-        // Dash Skill
-        if (skill_01_Available == true) //스킬 활성화 일 때
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
-            if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
-            {
-                Debug.Log("활성화");
-                MoveSpeed = 30;
-                animator.SetBool("Dash", true);
-                skill_01_Available = false;     //스킬 활성화
-                S1_duration = 0;
-                S1_coolTime = 0;
-            }
+            MoveControl();          
         }
-        else
+        
+        //직업별 스킬
+        if (TurnOnTheStage.characterNum == 0)
         {
-            S1_duration += Time.deltaTime;
-            S1_coolTime += Time.deltaTime;
-            if (S1_duration > S1_durationWaiting)       //지속시간이 끝나면
-            {
-                MoveSpeed = 20;
-                animator.SetBool("Dash", false);
-                S1_duration = 0;
-            }
-            if (S1_coolTime > S1_coolTimewaiting)       //쿨타임이 끝나면
-            {
-                Debug.Log("쿨타임 끝");
-                skill_01_Available = true;
-                S1_coolTime = 0;
-            }
+            Skill_Dash();
+        }
+        else if (TurnOnTheStage.characterNum == 1)
+        {
+            Skill_Slow();
+        }
+        else if (TurnOnTheStage.characterNum == 2)
+        {
+            Skill_Defend();
+        }
+        else if (TurnOnTheStage.characterNum == 3)
+        {
+            Skill_Stun();
         }
 
         //체력 관련
-
         if (HP == 3) HPLabel.text = "♥♥♥";
         else if (HP == 2) HPLabel.text = "♥♥♡";
         else if (HP == 1) HPLabel.text = "♥♡♡";
@@ -93,19 +139,8 @@ public class PlayerMove : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
-    {     
-
-        //"Run" 애니메이션
-        if (Input.GetKey(KeyCode.LeftArrow) ||
-            Input.GetKey(KeyCode.RightArrow) ||
-            Input.GetKey(KeyCode.UpArrow) ||
-            Input.GetKey(KeyCode.DownArrow))
-        {
-            animator.SetBool("Run", true);
-        }
-        else animator.SetBool("Run", false);
-
-        
+    {
+        AnimationSet();
 
         // ShowDamage
         if (ShowDamage_Available == true) //스킬 활성화 일 때
@@ -123,7 +158,7 @@ public class PlayerMove : MonoBehaviour
     }
 
   
-    void moveControl()
+    void MoveControl()
     {
         float horizontal = Input.GetAxisRaw("Vertical");
         float vertical = Input.GetAxisRaw("Horizontal");
@@ -131,6 +166,179 @@ public class PlayerMove : MonoBehaviour
 
         this.transform.rotation = Quaternion.LookRotation(lookDirection);
         this.transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
+    }
+
+    void Skill_Dash()         // Dash Skill
+    {
+        if (skill_01_Available == true) //스킬 활성화 일 때
+        {
+            if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
+            {
+                Debug.Log("대시 스킬 활성화");
+                MoveSpeed = 30;
+                animator.SetBool("Dash", true);
+                skill_01_Available = false;     //스킬 활성화
+                S1_duration = 0;
+                S1_coolTime = 0;
+            }
+        }
+        else
+        {
+            S1_duration += Time.deltaTime;
+            S1_coolTime += Time.deltaTime;
+            S1_leftTime -= Time.deltaTime;
+
+            float ratio = 1.0f - (S1_leftTime / S1_coolTimeWaiting);
+            if (skill_01_image) skill_01_image.fillAmount = ratio;
+
+            if (S1_duration > S1_durationWaiting)       //지속시간이 끝나면
+            {
+                MoveSpeed = 20;
+                animator.SetBool("Dash", false);
+                S1_duration = 0;
+            }
+            if (S1_coolTime > S1_coolTimeWaiting)       //쿨타임이 끝나면
+            {
+                Debug.Log("쿨타임 끝");
+                skill_01_Available = true;
+                S1_coolTime = 0;
+                S1_leftTime = S1_coolTimeWaiting;
+            }
+            
+            
+        }
+    }
+
+    void Skill_Slow()         // Slow Skill
+    {
+        if (skill_02_Available == true) //스킬 활성화 일 때
+        {
+            if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
+            {
+                Debug.Log("슬로우 스킬 활성화");
+                animator.SetBool("Dash", true);
+                skill_02_Available = false;     //스킬 활성화
+                S2_duration = 0;
+                S2_coolTime = 0;
+            }
+        }
+        else
+        {
+            S2_duration += Time.deltaTime;
+            S2_coolTime += Time.deltaTime;
+            S2_leftTime -= Time.deltaTime;
+
+            float ratio = 1.0f - (S2_leftTime / S2_coolTimeWaiting);
+            if (skill_02_image) skill_02_image.fillAmount = ratio;
+
+            if (S2_duration > S2_durationWaiting)       //지속시간이 끝나면
+            {
+                MoveSpeed = 20;
+                animator.SetBool("Dash", false);
+                S2_duration = 0;
+            }
+            if (S2_coolTime > S2_coolTimeWaiting)       //쿨타임이 끝나면
+            {
+                Debug.Log("쿨타임 끝");
+                skill_02_Available = true;
+                S2_coolTime = 0;
+                S2_leftTime = S2_coolTimeWaiting;
+            }
+
+
+        }
+    }
+
+    void Skill_Defend()       // Defend Skill
+    {
+        if (skill_03_Available == true) //스킬 활성화 일 때
+        {
+            if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
+            {
+                Debug.Log("방어 스킬 활성화");
+                MoveSpeed = 30;
+                animator.SetBool("Dash", true);
+                skill_03_Available = false;     //스킬 활성화
+                S3_duration = 0;
+                S3_coolTime = 0;
+            }
+        }
+        else
+        {
+            S3_duration += Time.deltaTime;
+            S3_coolTime += Time.deltaTime;
+            S3_leftTime -= Time.deltaTime;
+
+            float ratio = 1.0f - (S3_leftTime / S3_coolTimeWaiting);
+            if (skill_03_image) skill_03_image.fillAmount = ratio;
+
+            if (S3_duration > S3_durationWaiting)       //지속시간이 끝나면
+            {
+                MoveSpeed = 20;
+                animator.SetBool("Dash", false);
+                S3_duration = 0;
+            }
+            if (S3_coolTime > S3_coolTimeWaiting)       //쿨타임이 끝나면
+            {
+                Debug.Log("쿨타임 끝");
+                skill_03_Available = true;
+                S3_coolTime = 0;
+                S3_leftTime = S3_coolTimeWaiting;
+            }
+
+
+        }
+    }
+
+    void Skill_Stun()         // Stun Skill
+    {
+        if (skill_04_Available == true) //스킬 활성화 일 때
+        {
+            if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
+            {
+                Debug.Log("기절 스킬 활성화");
+                MoveSpeed = 30;
+                animator.SetBool("Dash", true);
+                skill_04_Available = false;     //스킬 활성화
+                S4_duration = 0;
+                S4_coolTime = 0;
+            }
+        }
+        else
+        {
+            S4_duration += Time.deltaTime;
+            S4_coolTime += Time.deltaTime;
+            S4_leftTime -= Time.deltaTime;
+
+            float ratio = 1.0f - (S4_leftTime / S4_coolTimeWaiting);
+            if (skill_04_image) skill_04_image.fillAmount = ratio;
+
+            if (S4_duration > S4_durationWaiting)       //지속시간이 끝나면
+            {
+                MoveSpeed = 20;
+                animator.SetBool("Dash", false);
+                S4_duration = 0;
+            }
+            if (S4_coolTime > S4_coolTimeWaiting)       //쿨타임이 끝나면
+            {
+                Debug.Log("쿨타임 끝");
+                skill_04_Available = true;
+                S4_coolTime = 0;
+                S4_leftTime = S4_coolTimeWaiting;
+            }
+
+
+        }
+    }
+
+    void AnimationSet()
+    {
+        //"Run" 애니메이션
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+        {
+            animator.SetBool("Run", true);
+        }
+        else animator.SetBool("Run", false);
     }
 
     private void OnTriggerEnter(Collider other)
