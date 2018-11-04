@@ -9,13 +9,14 @@ public class SpawnManager : MonoBehaviour {
     public GameObject Item_28;
     public GameObject Item_25;
 
-    void SpawnItem_03() //사과 스폰
+    void SpawnItem_03() //바나나 스폰
     {
         float randomX = Random.Range(-24.0f, 24.0f);
         float randomZ = Random.Range(-31.0f, 31.0f);
+        Quaternion qRotation = Quaternion.Euler(0f, 129f, 0f);  //회전 변수
         if (!enableSpawn)
         {
-            GameObject items = Instantiate(Item_03, new Vector3(randomX, 1f, randomZ), Quaternion.identity);
+            GameObject items = Instantiate(Item_03, new Vector3(randomX, 1f, randomZ), qRotation);
             Destroy(items, 6);//파괴될 시간설정
         }
     }
@@ -25,7 +26,7 @@ public class SpawnManager : MonoBehaviour {
         float randomZ = Random.Range(-31.0f, 31.0f);
         if (!enableSpawn)
         {
-            GameObject items = Instantiate(Item_28, new Vector3(randomX, 1f, randomZ), Item_28.transform.rotation);
+            GameObject items = Instantiate(Item_28, new Vector3(randomX, 2.52f, randomZ), Item_28.transform.rotation);
             Destroy(items, 6);//파괴될 시간설정
         }
     }
@@ -33,9 +34,10 @@ public class SpawnManager : MonoBehaviour {
     {
         float randomX = Random.Range(-24.0f, 24.0f);
         float randomZ = Random.Range(-31.0f, 31.0f);
+        Quaternion qRotation = Quaternion.Euler(0f, 46.079f, 0f);
         if (!enableSpawn)
         {
-            GameObject items = Instantiate(Item_25, new Vector3(randomX, 0.5f, randomZ), Quaternion.identity);
+            GameObject items = Instantiate(Item_25, new Vector3(randomX, 0.93f, randomZ), qRotation);
             Destroy(items, 6);//파괴될 시간설정
         }
     }

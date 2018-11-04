@@ -7,9 +7,9 @@ TagManager:
   - Cube
   - Enemy
   - Item Database
-  - item_03
-  - item_28
-  - item_25
+  - item28
+  - item03
+  - item25
   layers:
   - Default
   - TransparentFX
