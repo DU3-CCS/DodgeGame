@@ -122,6 +122,14 @@ public class TurnOnTheStage : MonoBehaviour {
 
     public void turnStage()
     {
+        // db 닫기
+        dbr.Close();
+        dbr = null;
+        dbcm.Dispose();
+        dbcm = null;
+        dbc.Close();
+        dbc = null;
+
         // 스테이지 전환을 위한 함수
         SceneManager.LoadScene("OnTheStage");
     }

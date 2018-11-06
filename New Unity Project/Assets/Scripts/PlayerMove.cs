@@ -11,21 +11,22 @@ public class PlayerMove : MonoBehaviour
     public Text HPLabel;
     public Image skill_01_image, skill_02_image, skill_03_image, skill_04_image = null;
 
+    public int MaxHP;
     public int HP;
 
     public float S1_duration, S2_duration, S3_duration, S4_duration = 0.0f;         //지속시간 카운터
     public float S1_coolTime, S2_coolTime, S3_coolTime, S4_coolTime = 0.0f;         //쿨타임 카운터
-    public float S1_leftTime, S2_leftTime, S3_leftTime, S4_leftTime;
-    public int S1_durationWaiting, S2_durationWaiting, S3_durationWaiting, S4_durationWaiting;
-    public int S1_coolTimeWaiting, S2_coolTimeWaiting, S3_coolTimeWaiting, S4_coolTimeWaiting;
+    public float S1_leftTime, S2_leftTime, S3_leftTime, S4_leftTime;                //남은 시간 카운터
+    public int S1_durationWaiting, S2_durationWaiting, S3_durationWaiting, S4_durationWaiting;  //지속시간
+    public int S1_coolTimeWaiting, S2_coolTimeWaiting, S3_coolTimeWaiting, S4_coolTimeWaiting;  //쿨타임
 
-    public float ShowDamage;
-    public float ShowDamageWaiting;
+    public float ShowDamage;            //데미지 카운터
+    public float ShowDamageWaiting;     //데미지 지속시간
 
-    public Animator animator;
+    public Animator animator;           //애니메이터
 
-    public float MoveSpeed = 20;
-    Vector3 lookDirection;
+    public float MoveSpeed = 20;        //기본 이동속도
+    Vector3 lookDirection;              //바라보는 방향
 
     private bool skill_01_Available = true;
     private bool skill_02_Available = true;
@@ -62,23 +63,25 @@ public class PlayerMove : MonoBehaviour
         //HP 설정
         if (TurnOnTheStage.characterNum == 0)
         {
-            HP = 3;
+            MaxHP = 3;
         }
         else if (TurnOnTheStage.characterNum == 1)
         {
-            HP = 4;
+            MaxHP = 4;
         }
         else if (TurnOnTheStage.characterNum == 2)
         {
-            HP = 2;
+            MaxHP = 1;
         }
         else if (TurnOnTheStage.characterNum == 3)
         {
-            HP = 1;
+            MaxHP = 2;
         }
+        HP = MaxHP;
 
         HPLabel = GameObject.Find("HPLabel").GetComponent<Text>();          //HPLabel 연결
 
+        //스킬 버튼 연결
         if (TurnOnTheStage.characterNum == 0)
         {
             skill_01_image = GameObject.Find("Skill_Dash").GetComponent<Image>();
@@ -100,8 +103,7 @@ public class PlayerMove : MonoBehaviour
             skill_04_image.fillAmount = 1;
         }
     }
-
-    
+  
     private void Update()
     {
         //방향키 조작
@@ -128,13 +130,8 @@ public class PlayerMove : MonoBehaviour
             Skill_Stun();
         }
 
-        //체력 관련
-        if (HP == 3) HPLabel.text = "♥♥♥";
-        else if (HP == 2) HPLabel.text = "♥♥♡";
-        else if (HP == 1) HPLabel.text = "♥♡♡";
 
-        //체력 0이하일시 팝업 씬으로 이동
-        if (HP <= 0) { SceneManager.LoadScene("PopUp"); }
+        HPControl();
     }
 
     // Update is called once per frame
@@ -154,10 +151,38 @@ public class PlayerMove : MonoBehaviour
             }
 
         }
-
     }
 
-  
+    void HPControl() //체력 관련
+    {
+        
+        if (MaxHP == 4)
+        {
+            if (HP == 4) HPLabel.text = "♥♥♥♥";
+            else if (HP == 3) HPLabel.text = "♥♥♥♡";
+            else if (HP == 2) HPLabel.text = "♥♥♡♡";
+            else if (HP == 1) HPLabel.text = "♥♡♡♡";
+        }
+        else if (MaxHP == 3)
+        {
+            if (HP == 3) HPLabel.text = "♥♥♥";
+            else if (HP == 2) HPLabel.text = "♥♥♡";
+            else if (HP == 1) HPLabel.text = "♥♡♡";
+        }
+        else if (MaxHP == 2)
+        {
+            if (HP == 2) HPLabel.text = "♥♥";
+            else if (HP == 1) HPLabel.text = "♥♡";
+        }
+        else if (MaxHP == 1)
+        {
+            if (HP == 1) HPLabel.text = "♥";
+        }
+
+        //체력 0이하일시 팝업 씬으로 이동
+        if (HP <= 0) { SceneManager.LoadScene("PopUp"); }
+    }
+
     void MoveControl()
     {
         float horizontal = Input.GetAxisRaw("Vertical");
@@ -356,14 +381,14 @@ public class PlayerMove : MonoBehaviour
         }
         if (other.gameObject.tag == "item03")
         {
-            if(HP < 3) HP += 1;
+            if(HP < MaxHP) HP += 1;
             Destroy(other.gameObject);
             Debug.Log("바나나!");
 
         }
         if (other.gameObject.tag == "item28")
         {
-            HP = 3;         
+            HP = MaxHP;         
             Destroy(other.gameObject);
             Debug.Log("물약!");
         }
