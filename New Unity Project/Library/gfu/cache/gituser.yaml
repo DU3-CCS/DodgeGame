@@ -8,11 +8,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1697640569, guid: 68c7e4565cde54155bb78d8e935f1dd4, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: GitHub.Unity:GitHub.Unity:GitUserCache
   cacheType: 7
-  lastUpdatedAtString: 2018-11-07T00:04:21.938+09:00
-  initializedAtString: 2018-11-06T23:52:39.608+09:00
-  gitName: 94tiger
-  gitEmail: 94tiger@naver.com
+  lastUpdatedAtString: 0001-01-01T00:00:00.000+00:00
+  initializedAtString: 0001-01-01T00:00:00.000+00:00
+  gitName: 
+  gitEmail: 

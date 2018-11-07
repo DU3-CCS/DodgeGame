@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 1
-  lastUpdatedAtString: 2018-11-06T23:52:31.533+09:00
-  initializedAtString: 2018-11-06T23:52:31.533+09:00
+  lastUpdatedAtString: 2018-11-08T00:02:47.602+09:00
+  initializedAtString: 2018-11-08T00:02:47.602+09:00
   currentGitRemote:
     name: origin
     url: https://github.com/DU3-CCS/DodgeGame.git

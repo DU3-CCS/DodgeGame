@@ -9,6 +9,7 @@ public class ShopBuyButtonEvent : MonoBehaviour {
     public int characterNum;
     public int cost;
     public Text Text_ResourceAmount;
+    public Text Text_Cost;
 
     // sql 인스턴스 변수
     IDbConnection dbc;
@@ -48,24 +49,24 @@ public class ShopBuyButtonEvent : MonoBehaviour {
         {
             if (characterNum >= 0 && characterNum < 4)
             {
-                // DB에 저장
+                /* DB에 저장 */
                 dbcm.CommandText = "INSERT INTO Job(characterID, job) VALUES(1, " + characterNum + ")";
                 Debug.Log("INSERT INTO Job(characterID, job) VALUES(1, " + characterNum + ")");
                 //dbcm.ExecuteNonQuery();
-                TurnOnTheStage.charactor_unlock[characterNum] = true;
+                TurnOnTheStage.charactor_unlock[characterNum] = false;
 
-                // 비용 감소
+                /* 비용 감소 */
                 money -= cost;
                 dbcm.CommandText = "UPDATE Character SET money = " + money;
                 Debug.Log("UPDATE Character SET money = " + money);
                 //dbcm.ExecuteNonQuery();
                 
-                // 돈 컴포넌트 값 변경
-                Text_ResourceAmount = GameObject.Find("Text_ResourceAmount").GetComponent<Text>();
-                Text_ResourceAmount.text = money.ToString(); 
+                /* 돈 컴포넌트 값 변경*/
+                Text_ResourceAmount.text = money.ToString();
 
-                //텍스트 변경 스크립트 문 추가 Buy->Purchased
-
+                /* 텍스트 변경 스크립트 문 추가 Buy->Purchased */
+                Text_Cost.text = "Purchased";
+                // Buy 버튼 클릭 불가능하게 수정
             }
         }
 

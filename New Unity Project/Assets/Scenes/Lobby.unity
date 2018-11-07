@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1406,7 +1406,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -37.000015}
+  m_AnchoredPosition: {x: 0, y: -37}
   m_SizeDelta: {x: -40, y: -126}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &362752894
@@ -1856,6 +1856,7 @@ GameObject:
   - component: {fileID: 472678613}
   - component: {fileID: 472678612}
   - component: {fileID: 472678614}
+  - component: {fileID: 472678615}
   m_Layer: 5
   m_Name: Panel_Cost
   m_TagString: Untagged
@@ -1957,9 +1958,35 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 472678612}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 472678615}
+        m_MethodName: Buy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &472678615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 472678610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60c75c27b35b13408cefbc0ee4fa48d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterNum: 1
+  cost: 500
+  Text_ResourceAmount: {fileID: 1596817198}
+  Text_Cost: {fileID: 649491044}
 --- !u!1 &473245689
 GameObject:
   m_ObjectHideFlags: 0
@@ -4286,7 +4313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -37.000015}
+  m_AnchoredPosition: {x: 0, y: -37}
   m_SizeDelta: {x: -40, y: -126}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &949762181
@@ -6477,6 +6504,7 @@ GameObject:
   - component: {fileID: 1554937965}
   - component: {fileID: 1554937964}
   - component: {fileID: 1554937966}
+  - component: {fileID: 1554937967}
   m_Layer: 5
   m_Name: Panel_Cost
   m_TagString: Untagged
@@ -6578,9 +6606,35 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1554937964}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1554937967}
+        m_MethodName: Buy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1554937967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1554937962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60c75c27b35b13408cefbc0ee4fa48d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterNum: 2
+  cost: 1000
+  Text_ResourceAmount: {fileID: 1596817198}
+  Text_Cost: {fileID: 641939359}
 --- !u!1 &1563747445
 GameObject:
   m_ObjectHideFlags: 0
@@ -7298,6 +7352,7 @@ GameObject:
   - component: {fileID: 1635870984}
   - component: {fileID: 1635870983}
   - component: {fileID: 1635870985}
+  - component: {fileID: 1635870986}
   m_Layer: 5
   m_Name: Panel_Cost
   m_TagString: Untagged
@@ -7399,9 +7454,35 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1635870983}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1635870986}
+        m_MethodName: Buy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1635870986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1635870981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60c75c27b35b13408cefbc0ee4fa48d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterNum: 3
+  cost: 2000
+  Text_ResourceAmount: {fileID: 1596817198}
+  Text_Cost: {fileID: 417900124}
 --- !u!1 &1655309495
 GameObject:
   m_ObjectHideFlags: 0

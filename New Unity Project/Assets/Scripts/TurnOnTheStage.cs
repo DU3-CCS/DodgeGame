@@ -99,6 +99,7 @@ public class TurnOnTheStage : MonoBehaviour {
         if(charactor_unlock[characterNum])
         {
             GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(true);
+            // Start 버튼 비활성화
         }
         else
         {
