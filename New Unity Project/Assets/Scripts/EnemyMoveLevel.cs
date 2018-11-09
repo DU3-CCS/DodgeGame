@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyMoveLevel : MonoBehaviour
 {
-    float MoveSpeed = 20.0f;
+    public float MoveSpeed = 20.0f;
     private float accumTimeAterUpdate;
     private float updateTime;
     private Vector3 myposition;
@@ -14,6 +14,9 @@ public class EnemyMoveLevel : MonoBehaviour
     private int count = 0;
     private int turnCount = 50;
     public int maxTurnCount;
+
+    public Animator animator;           //애니메이터
+
     Vector3 lookDirection;
 
     public GameObject target;
@@ -46,5 +49,28 @@ public class EnemyMoveLevel : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void Slow()
+    {
+        MoveSpeed = 8.0f;
+        animator.SetBool("Run", false);
+        animator.SetBool("Walk", true);
+        
+    }
+    
+    public void Stun()
+    {
+        MoveSpeed = 0f;
+        animator.SetBool("Run", false);
+        animator.SetBool("Stunned", true);
+    }
+    public void ReleaseSkill()
+    {
+        MoveSpeed = 20.0f;
+        animator.SetBool("Run", true);
+        animator.SetBool("Slow", false);
+        animator.SetBool("Stunned", false);
+
     }
 }

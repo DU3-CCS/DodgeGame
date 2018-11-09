@@ -336,3 +336,5 @@ D:\Unity\DodgeGame\New Unity Project\Temp\bin\Debug\UnityEngine.HoloLens.xml
 D:\Unity\DodgeGame\New Unity Project\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
 D:\Unity\DodgeGame\New Unity Project\Temp\bin\Debug\UnityEngine.ParticlesLegacyModule.xml
 D:\Unity\DodgeGame\New Unity Project\obj\Debug\Assembly-CSharp.csproj.CopyComplete
+D:\Unity\DodgeGame\New Unity Project\Temp\bin\Debug\Mono.Data.SqliteClient.dll
+D:\Unity\DodgeGame\New Unity Project\Temp\bin\Debug\System.Data.dll

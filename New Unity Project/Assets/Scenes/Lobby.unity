@@ -2260,7 +2260,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 616835369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef91637c2b817647a3db5c633b98a63, type: 3}
+  m_Script: {fileID: 11500000, guid: c921c3c3f0c75f04ba17c04a536f60a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Text_ResourceAmount: {fileID: 0}
@@ -6571,7 +6571,6 @@ GameObject:
   - component: {fileID: 1724659026}
   - component: {fileID: 1724659025}
   - component: {fileID: 1724659024}
-  - component: {fileID: 1724659023}
   m_Layer: 5
   m_Name: Button_Right
   m_TagString: Untagged
@@ -6599,17 +6598,6 @@ RectTransform:
   m_AnchoredPosition: {x: -20, y: -100}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 1, y: 0}
---- !u!114 &1724659023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1724659021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76cfc19772aa2fc49a36604a406b0b09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1724659024
 MonoBehaviour:
   m_ObjectHideFlags: 0

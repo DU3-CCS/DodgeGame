@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     public List<Item> items = new List<Item>();
     public Text HPLabel;
     public Image skill_01_image, skill_02_image, skill_03_image, skill_04_image = null;
+    public GameObject[] enemy;
 
     public int MaxHP;
     public int HP;
@@ -40,7 +41,7 @@ public class PlayerMove : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.SetBool("Dash", false);
         animator.SetBool("Defend", false);
-
+        
         S1_durationWaiting = 2;     //지속시간 
         S1_coolTimeWaiting = 5;     //쿨타임
         S1_leftTime = S1_coolTimeWaiting;
@@ -89,16 +90,19 @@ public class PlayerMove : MonoBehaviour
         }
         else if (TurnOnTheStage.characterNum == 1)
         {
+            Debug.Log("슬로우 스킬 이미지");
             skill_02_image = GameObject.Find("Skill_Slow").GetComponent<Image>();
             skill_02_image.fillAmount = 1;
         }
         else if (TurnOnTheStage.characterNum == 2)
         {
+            Debug.Log("디펜드 스킬 이미지");
             skill_03_image = GameObject.Find("Skill_Defend").GetComponent<Image>();
             skill_03_image.fillAmount = 1;
         }
         else if (TurnOnTheStage.characterNum == 3)
         {
+            Debug.Log("스턴 스킬 이미지");
             skill_04_image = GameObject.Find("Skill_Stun").GetComponent<Image>();
             skill_04_image.fillAmount = 1;
         }
@@ -106,6 +110,8 @@ public class PlayerMove : MonoBehaviour
   
     private void Update()
     {
+        
+
         //방향키 조작
         if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
@@ -183,7 +189,7 @@ public class PlayerMove : MonoBehaviour
         if (HP <= 0) { SceneManager.LoadScene("PopUp"); }
     }
 
-    void MoveControl()
+    void MoveControl() //플레이어 움직임
     {
         float horizontal = Input.GetAxisRaw("Vertical");
         float vertical = Input.GetAxisRaw("Horizontal");
@@ -228,9 +234,7 @@ public class PlayerMove : MonoBehaviour
                 skill_01_Available = true;
                 S1_coolTime = 0;
                 S1_leftTime = S1_coolTimeWaiting;
-            }
-            
-            
+            }            
         }
     }
 
@@ -240,8 +244,13 @@ public class PlayerMove : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
             {
+                enemy = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach (GameObject oneEnemy in enemy)
+                {
+                    oneEnemy.GetComponent<EnemyMove>().Slow();
+                }
                 Debug.Log("슬로우 스킬 활성화");
-                animator.SetBool("Dash", true);
+                //animator.SetBool("Dash", true);
                 skill_02_Available = false;     //스킬 활성화
                 S2_duration = 0;
                 S2_coolTime = 0;
@@ -258,9 +267,13 @@ public class PlayerMove : MonoBehaviour
 
             if (S2_duration > S2_durationWaiting)       //지속시간이 끝나면
             {
-                MoveSpeed = 20;
-                animator.SetBool("Dash", false);
+                //animator.SetBool("Dash", false);
                 S2_duration = 0;
+                enemy = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach (GameObject oneEnemy in enemy)
+                {
+                    oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
+                }
             }
             if (S2_coolTime > S2_coolTimeWaiting)       //쿨타임이 끝나면
             {
@@ -269,8 +282,6 @@ public class PlayerMove : MonoBehaviour
                 S2_coolTime = 0;
                 S2_leftTime = S2_coolTimeWaiting;
             }
-
-
         }
     }
 
@@ -281,8 +292,7 @@ public class PlayerMove : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
             {
                 Debug.Log("방어 스킬 활성화");
-                MoveSpeed = 30;
-                animator.SetBool("Dash", true);
+                //animator.SetBool("Dash", true);
                 skill_03_Available = false;     //스킬 활성화
                 S3_duration = 0;
                 S3_coolTime = 0;
@@ -300,7 +310,7 @@ public class PlayerMove : MonoBehaviour
             if (S3_duration > S3_durationWaiting)       //지속시간이 끝나면
             {
                 MoveSpeed = 20;
-                animator.SetBool("Dash", false);
+                //animator.SetBool("Dash", false);
                 S3_duration = 0;
             }
             if (S3_coolTime > S3_coolTimeWaiting)       //쿨타임이 끝나면
@@ -315,15 +325,20 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    void Skill_Stun()         // Stun Skill
+    void Skill_Stun()         // Dash Skill
     {
         if (skill_04_Available == true) //스킬 활성화 일 때
         {
             if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
             {
-                Debug.Log("기절 스킬 활성화");
-                MoveSpeed = 30;
-                animator.SetBool("Dash", true);
+                enemy = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach(GameObject oneEnemy in enemy)
+                {
+                    oneEnemy.GetComponent<EnemyMove>().Stun();
+                }
+                Debug.Log("스턴 스킬 활성화");
+                //animator.SetBool("Dash", true);
+
                 skill_04_Available = false;     //스킬 활성화
                 S4_duration = 0;
                 S4_coolTime = 0;
@@ -340,8 +355,12 @@ public class PlayerMove : MonoBehaviour
 
             if (S4_duration > S4_durationWaiting)       //지속시간이 끝나면
             {
-                MoveSpeed = 20;
-                animator.SetBool("Dash", false);
+                //animator.SetBool("Dash", false);
+                enemy = GameObject.FindGameObjectsWithTag("Enemy");
+                foreach (GameObject oneEnemy in enemy)
+                {          
+                    oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
+                }
                 S4_duration = 0;
             }
             if (S4_coolTime > S4_coolTimeWaiting)       //쿨타임이 끝나면
@@ -351,8 +370,6 @@ public class PlayerMove : MonoBehaviour
                 S4_coolTime = 0;
                 S4_leftTime = S4_coolTimeWaiting;
             }
-
-
         }
     }
 
