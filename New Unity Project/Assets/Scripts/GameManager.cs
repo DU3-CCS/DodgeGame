@@ -7,9 +7,10 @@ public class GameManager : MonoBehaviour {
 
     public Text timeLabel;
     public float timeCount = 0;
-
-	// Use this for initialization
-	void Start () {
+    public static int gameScore = 0;
+    //public int gameScore_item01Cnt = PlayerMove.item01Cnt;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -17,5 +18,14 @@ public class GameManager : MonoBehaviour {
 	void Update () {
         timeCount += Time.deltaTime;
         timeLabel.text = string.Format ("{0:N2}", timeCount);
-	}
+        
+    }
+
+    private void OnDisable()
+    {
+        gameScore += (int)timeCount*100;
+        gameScore += PlayerMove.item01Cnt * 100;
+        gameScore += PlayerMove.item02Cnt * 200;
+        gameScore -= PlayerMove.item03Cnt * 100;
+    }
 }

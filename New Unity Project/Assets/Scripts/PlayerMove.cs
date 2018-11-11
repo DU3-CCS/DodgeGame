@@ -8,12 +8,11 @@ using UnityEngine.SceneManagement;
 public class PlayerMove : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
-    public Text HPLabel;
-    public Image skill_01_image, skill_02_image, skill_03_image, skill_04_image = null;
-    public GameObject[] enemy;
-
-    public int MaxHP;
-    public int HP;
+    public Text HPLabel;        //체력 표시 UI
+    public Image skill_01_image, skill_02_image, skill_03_image, skill_04_image = null; //스킬 이미지
+    public GameObject[] enemy;      //적 배열
+    
+    public int MaxHP, HP;           //최대 체력, 현재 체력
 
     public float S1_duration, S2_duration, S3_duration, S4_duration = 0.0f;         //지속시간 카운터
     public float S1_coolTime, S2_coolTime, S3_coolTime, S4_coolTime = 0.0f;         //쿨타임 카운터
@@ -21,25 +20,27 @@ public class PlayerMove : MonoBehaviour
     public int S1_durationWaiting, S2_durationWaiting, S3_durationWaiting, S4_durationWaiting;  //지속시간
     public int S1_coolTimeWaiting, S2_coolTimeWaiting, S3_coolTimeWaiting, S4_coolTimeWaiting;  //쿨타임
 
-    public float ShowDamage;            //데미지 카운터
-    public float ShowDamageWaiting;     //데미지 지속시간
-    public float ShowGuard;
-    public float ShowGuardWaiting;
+    public float ShowDamage;            //데미지 이미지 카운터
+    public float ShowDamageWaiting;     //데미지 이미지 지속시간
+    public float ShowGuard;             //방어 이미지
+    public float ShowGuardWaiting;      //방어 이미지 지속시간
 
     public Animator animator;           //애니메이터
 
     public float MoveSpeed = 20;        //기본 이동속도
     Vector3 lookDirection;              //바라보는 방향
 
-    private bool skill_01_Available = true;
+    private bool skill_01_Available = true; //스킬 사용 가능 표시
     private bool skill_02_Available = true;
     private bool skill_03_Available = true;
     private bool skill_04_Available = true;
 
-    private bool skill_01_On, skill_02_On, skill_03_On, skill_04_On = false;
+    private bool skill_01_On, skill_02_On, skill_03_On, skill_04_On = false;    //스킬 사용 중
 
     private bool ShowDamage_Available = true;
     private bool ShowGuard_Available = true;
+
+    public static int item01Cnt, item02Cnt, item03Cnt = 0;
 
     private void Start()
     {
@@ -444,19 +445,21 @@ public class PlayerMove : MonoBehaviour
             if(HP < MaxHP) HP += 1;
             Destroy(other.gameObject);
             Debug.Log("바나나!");
-
+            item01Cnt += 1;
         }
         if (other.gameObject.tag == "item28")
         {
             HP = MaxHP;         
             Destroy(other.gameObject);
             Debug.Log("물약!");
+            item02Cnt += 1;
         }
         if (other.gameObject.tag == "item25")
         {
             HP -= 1;
             Destroy(other.gameObject);
             Debug.Log("썩은고기!");
+            item03Cnt += 1;
         }
         if (other.gameObject.tag == "Cube") Debug.Log("CUBE!");
     }
