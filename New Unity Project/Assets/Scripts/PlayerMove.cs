@@ -23,6 +23,8 @@ public class PlayerMove : MonoBehaviour
 
     public float ShowDamage;            //데미지 카운터
     public float ShowDamageWaiting;     //데미지 지속시간
+    public float ShowGuard;
+    public float ShowGuardWaiting;
 
     public Animator animator;           //애니메이터
 
@@ -34,7 +36,10 @@ public class PlayerMove : MonoBehaviour
     private bool skill_03_Available = true;
     private bool skill_04_Available = true;
 
+    private bool skill_01_On, skill_02_On, skill_03_On, skill_04_On = false;
+
     private bool ShowDamage_Available = true;
+    private bool ShowGuard_Available = true;
 
     private void Start()
     {
@@ -46,12 +51,12 @@ public class PlayerMove : MonoBehaviour
         S1_coolTimeWaiting = 5;     //쿨타임
         S1_leftTime = S1_coolTimeWaiting;
 
-        S2_durationWaiting = 2;     //지속시간 
-        S2_coolTimeWaiting = 5;     //쿨타임
+        S2_durationWaiting = 3;     //지속시간 
+        S2_coolTimeWaiting = 15;     //쿨타임
         S2_leftTime = S2_coolTimeWaiting;
 
-        S3_durationWaiting = 2;     //지속시간 
-        S3_coolTimeWaiting = 5;     //쿨타임
+        S3_durationWaiting = 4;     //지속시간 
+        S3_coolTimeWaiting = 15;     //쿨타임
         S3_leftTime = S3_coolTimeWaiting;
 
         S4_durationWaiting = 2;     //지속시간 
@@ -61,6 +66,9 @@ public class PlayerMove : MonoBehaviour
         ShowDamage = 0.0f;         //데미지 이미지 카운터
         ShowDamageWaiting = 0.5f;     //데미지 이미지 지속시간 
 
+        ShowGuard = 0.0f;         //방어 이미지 카운터
+        ShowGuardWaiting = 0.5f;     //방어 이미지 지속시간 
+
         //HP 설정
         if (TurnOnTheStage.characterNum == 0)
         {
@@ -68,11 +76,11 @@ public class PlayerMove : MonoBehaviour
         }
         else if (TurnOnTheStage.characterNum == 1)
         {
-            MaxHP = 4;
+            MaxHP = 3;
         }
         else if (TurnOnTheStage.characterNum == 2)
         {
-            MaxHP = 1;
+            MaxHP = 2;
         }
         else if (TurnOnTheStage.characterNum == 3)
         {
@@ -144,19 +152,8 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate()
     {
         AnimationSet();
+        ShowCondition();
 
-        // ShowDamage
-        if (ShowDamage_Available == true) //스킬 활성화 일 때
-        {
-            ShowDamage += Time.deltaTime;
-            if (ShowDamage > ShowDamageWaiting) //지속시간이 끝나면
-            {
-                GameObject.Find("Image_Damage").transform.Find("GameObject").gameObject.SetActive(false);
-                ShowDamage_Available = false;
-                ShowDamage = 0;
-            }
-
-        }
     }
 
     void HPControl() //체력 관련
@@ -199,6 +196,32 @@ public class PlayerMove : MonoBehaviour
         this.transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
     }
 
+    void ShowCondition()                //상태 표시창
+    {
+        // ShowDamage
+        if (ShowDamage_Available == true) //스킬 활성화 일 때
+        {
+            ShowDamage += Time.deltaTime;
+            
+            if (ShowDamage > ShowDamageWaiting) //지속시간이 끝나면
+            {
+                GameObject.Find("Image_Damage").transform.Find("Damaged").gameObject.SetActive(false);
+                ShowDamage_Available = false;
+                ShowDamage = 0;
+            }
+        }       
+        if (TurnOnTheStage.characterNum == 2 && skill_03_Available == false) //방어스킬 활성화 일 때
+        {
+            ShowGuard += Time.deltaTime;
+            if (ShowGuard > ShowGuardWaiting) //방어함 이미지를 띄우는 지속시간이 끝나면
+            {
+                GameObject.Find("Image_Damage").transform.Find("Guard").gameObject.SetActive(false);
+                ShowGuard_Available = false;
+                ShowGuard = 0;
+            }
+        }
+    }
+
     void Skill_Dash()         // Dash Skill
     {
         if (skill_01_Available == true) //스킬 활성화 일 때
@@ -211,11 +234,15 @@ public class PlayerMove : MonoBehaviour
                 skill_01_Available = false;     //스킬 활성화
                 S1_duration = 0;
                 S1_coolTime = 0;
+                skill_01_On = true;
             }
         }
         else
         {
-            S1_duration += Time.deltaTime;
+            if (skill_01_On == true)
+            {
+                S1_duration += Time.deltaTime;
+            }
             S1_coolTime += Time.deltaTime;
             S1_leftTime -= Time.deltaTime;
 
@@ -227,6 +254,7 @@ public class PlayerMove : MonoBehaviour
                 MoveSpeed = 20;
                 animator.SetBool("Dash", false);
                 S1_duration = 0;
+                skill_01_On = false;
             }
             if (S1_coolTime > S1_coolTimeWaiting)       //쿨타임이 끝나면
             {
@@ -237,7 +265,6 @@ public class PlayerMove : MonoBehaviour
             }            
         }
     }
-
     void Skill_Slow()         // Slow Skill
     {
         if (skill_02_Available == true) //스킬 활성화 일 때
@@ -254,11 +281,15 @@ public class PlayerMove : MonoBehaviour
                 skill_02_Available = false;     //스킬 활성화
                 S2_duration = 0;
                 S2_coolTime = 0;
+                skill_02_On = true;
             }
         }
         else
         {
-            S2_duration += Time.deltaTime;
+            if (skill_03_On == true)
+            {
+                S2_duration += Time.deltaTime;
+            }
             S2_coolTime += Time.deltaTime;
             S2_leftTime -= Time.deltaTime;
 
@@ -274,6 +305,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
                 }
+                skill_02_On = false;
             }
             if (S2_coolTime > S2_coolTimeWaiting)       //쿨타임이 끝나면
             {
@@ -284,23 +316,25 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-
     void Skill_Defend()       // Defend Skill
     {
-        if (skill_03_Available == true) //스킬 활성화 일 때
+        if (skill_03_Available == true) //스킬 사용 가능일 때
         {
             if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
             {
                 Debug.Log("방어 스킬 활성화");
-                //animator.SetBool("Dash", true);
-                skill_03_Available = false;     //스킬 활성화
+                animator.SetBool("Cast Spell", true);
+                skill_03_Available = false;     //스킬 사용 불가능
                 S3_duration = 0;
                 S3_coolTime = 0;
+                skill_03_On = true;
             }
         }
         else
         {
-            S3_duration += Time.deltaTime;
+            if(skill_03_On == true) {
+                S3_duration += Time.deltaTime;
+            }
             S3_coolTime += Time.deltaTime;
             S3_leftTime -= Time.deltaTime;
 
@@ -309,9 +343,9 @@ public class PlayerMove : MonoBehaviour
 
             if (S3_duration > S3_durationWaiting)       //지속시간이 끝나면
             {
-                MoveSpeed = 20;
                 //animator.SetBool("Dash", false);
                 S3_duration = 0;
+                skill_03_On = false;
             }
             if (S3_coolTime > S3_coolTimeWaiting)       //쿨타임이 끝나면
             {
@@ -320,12 +354,9 @@ public class PlayerMove : MonoBehaviour
                 S3_coolTime = 0;
                 S3_leftTime = S3_coolTimeWaiting;
             }
-
-
         }
     }
-
-    void Skill_Stun()         // Dash Skill
+    void Skill_Stun()         // Stun Skill
     {
         if (skill_04_Available == true) //스킬 활성화 일 때
         {
@@ -342,11 +373,15 @@ public class PlayerMove : MonoBehaviour
                 skill_04_Available = false;     //스킬 활성화
                 S4_duration = 0;
                 S4_coolTime = 0;
+                skill_04_On = true;
             }
         }
         else
         {
-            S4_duration += Time.deltaTime;
+            if (skill_04_On == true)
+            {
+                S4_duration += Time.deltaTime;
+            }
             S4_coolTime += Time.deltaTime;
             S4_leftTime -= Time.deltaTime;
 
@@ -362,6 +397,7 @@ public class PlayerMove : MonoBehaviour
                     oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
                 }
                 S4_duration = 0;
+                skill_04_On = false;
             }
             if (S4_coolTime > S4_coolTimeWaiting)       //쿨타임이 끝나면
             {
@@ -372,7 +408,6 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-
     void AnimationSet()
     {
         //"Run" 애니메이션
@@ -387,13 +422,21 @@ public class PlayerMove : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log("충돌!");
-            HP -= 1;
-            
             //데미지 표시
-            GameObject.Find("Image_Damage").transform.Find("GameObject").gameObject.SetActive(true);
-            ShowDamage_Available = true;
-
+            
+            if (skill_03_On == true)
+            {
+                Debug.Log(S3_duration);
+                GameObject.Find("Image_Damage").transform.Find("Guard").gameObject.SetActive(true);
+                ShowGuard_Available = true;
+                Debug.Log("방어함");
+            }
+            else {
+                GameObject.Find("Image_Damage").transform.Find("Damaged").gameObject.SetActive(true);
+                ShowDamage_Available = true;
+                Debug.Log("충돌!");
+                HP -= 1;
+            }
             Debug.Log(HP);
         }
         if (other.gameObject.tag == "item03")
