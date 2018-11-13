@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public Text timeLabel;
     public float timeCount = 0;
     public static int gameScore = 0;
+    public static int gold = 0;
     //public int gameScore_item01Cnt = PlayerMove.item01Cnt;
     // Use this for initialization
     void Start () {
@@ -27,5 +28,7 @@ public class GameManager : MonoBehaviour {
         gameScore += PlayerMove.item01Cnt * 100;
         gameScore += PlayerMove.item02Cnt * 200;
         gameScore -= PlayerMove.item03Cnt * 100;
+
+        gold = gameScore / 100;
     }
 }
