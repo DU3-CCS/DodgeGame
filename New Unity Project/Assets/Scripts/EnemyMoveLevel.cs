@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class EnemyMoveLevel : MonoBehaviour
@@ -9,8 +8,6 @@ public class EnemyMoveLevel : MonoBehaviour
     private float accumTimeAterUpdate;
     private float updateTime;
     private Vector3 myposition;
-    private ThreadStart td;
-    private Thread t;
     private int count = 0;
     private int turnCount = 50;
     public int maxTurnCount;
