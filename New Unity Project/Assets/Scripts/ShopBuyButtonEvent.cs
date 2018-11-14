@@ -8,9 +8,9 @@ using Mono.Data.SqliteClient;
 public class ShopBuyButtonEvent : MonoBehaviour {
     public int characterNum;
     public int cost;
-    public Text Text_ResourceAmount;
+    private Text Text_ResourceAmount;
     public Text Text_Cost;
-
+    
     // sql 인스턴스 변수
     IDbConnection dbc;
     IDbCommand dbcm;        //SQL문 작동 개체
@@ -20,7 +20,8 @@ public class ShopBuyButtonEvent : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
+        Text_ResourceAmount = GameObject.Find("Text_ResourceAmount").GetComponent<Text>();
+        Text_Cost = transform.Find("Text_Cost").GetComponent<Text>();
     }
 	
 	// Update is called once per frame
@@ -52,14 +53,27 @@ public class ShopBuyButtonEvent : MonoBehaviour {
                 /* DB에 저장 */
                 dbcm.CommandText = "INSERT INTO Job(characterID, job) VALUES(1, " + characterNum + ")";
                 Debug.Log("INSERT INTO Job(characterID, job) VALUES(1, " + characterNum + ")");
-                //dbcm.ExecuteNonQuery();
+                dbcm.ExecuteNonQuery();
                 TurnOnTheStage.charactor_unlock[characterNum] = false;
+
+                /* 구입 업적 추가 */
+                dbcm.CommandText = "SELECT ID, condition, state FROM record WHERE ID = " + characterNum;
+                dbr = dbcm.ExecuteReader();
+
+                if(dbr.Read())
+                {
+                    if (dbr.GetInt16(2) == 0)
+                    {
+                        dbcm.CommandText = "UPDATE Record SET state = 1 WHERE ID = " + dbr.GetInt16(0);
+                        dbcm.ExecuteNonQuery();
+                    }
+                }
 
                 /* 비용 감소 */
                 money -= cost;
                 dbcm.CommandText = "UPDATE Character SET money = " + money;
                 Debug.Log("UPDATE Character SET money = " + money);
-                //dbcm.ExecuteNonQuery();
+                dbcm.ExecuteNonQuery();
                 
                 /* 돈 컴포넌트 값 변경*/
                 Text_ResourceAmount.text = money.ToString();

@@ -229,6 +229,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
             {
+                SoundManager.instance.SkillDashUse();  //스킬 사운드
                 Debug.Log("대시 스킬 활성화");
                 MoveSpeed = 30;
                 animator.SetBool("Dash", true);
@@ -272,6 +273,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
             {
+                SoundManager.instance.SkillSlowUse();  //스킬 사운드
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
                 {
@@ -326,6 +328,7 @@ public class PlayerMove : MonoBehaviour
                 Debug.Log("방어 스킬 활성화");
                 animator.SetBool("Cast Spell", true);
                 skill_03_Available = false;     //스킬 사용 불가능
+                SoundManager.instance.SkillDefendUse();  //스킬 사운드
                 S3_duration = 0;
                 S3_coolTime = 0;
                 skill_03_On = true;
@@ -363,6 +366,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
             {
+                SoundManager.instance.SkillStunUse();  //스킬 사운드
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach(GameObject oneEnemy in enemy)
                 {
@@ -430,11 +434,13 @@ public class PlayerMove : MonoBehaviour
                 Debug.Log(S3_duration);
                 GameObject.Find("Image_Damage").transform.Find("Guard").gameObject.SetActive(true);
                 ShowGuard_Available = true;
+                SoundManager.instance.SkillDefendActive();
                 Debug.Log("방어함");
             }
             else {
                 GameObject.Find("Image_Damage").transform.Find("Damaged").gameObject.SetActive(true);
                 ShowDamage_Available = true;
+                SoundManager.instance.Damage();
                 Debug.Log("충돌!");
                 HP -= 1;
             }
@@ -444,6 +450,7 @@ public class PlayerMove : MonoBehaviour
         {
             if(HP < MaxHP) HP += 1;
             Destroy(other.gameObject);
+            SoundManager.instance.Eat();
             Debug.Log("바나나!");
             item01Cnt += 1;
         }
@@ -451,6 +458,7 @@ public class PlayerMove : MonoBehaviour
         {
             HP = MaxHP;         
             Destroy(other.gameObject);
+            SoundManager.instance.DrinkPotion();
             Debug.Log("물약!");
             item02Cnt += 1;
         }
@@ -458,6 +466,7 @@ public class PlayerMove : MonoBehaviour
         {
             HP -= 1;
             Destroy(other.gameObject);
+            SoundManager.instance.RottenMeat();
             Debug.Log("썩은고기!");
             item03Cnt += 1;
         }

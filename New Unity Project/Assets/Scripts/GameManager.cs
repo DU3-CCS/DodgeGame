@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour {
     //public int gameScore_item01Cnt = PlayerMove.item01Cnt;
     // Use this for initialization
     void Start () {
-		
-	}
+        gameScore = 0;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,6 +29,6 @@ public class GameManager : MonoBehaviour {
         gameScore += PlayerMove.item02Cnt * 200;
         gameScore -= PlayerMove.item03Cnt * 100;
 
-        gold = gameScore / 100;
+        gold = gameScore / 10;
     }
 }

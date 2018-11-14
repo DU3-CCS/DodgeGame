@@ -45,7 +45,10 @@ public class TurnOnTheStage : MonoBehaviour {
         while (dbr.Read())
         {
             if (dbr.GetInt16(2) >= 0 && dbr.GetInt16(2) < 4)
+            {
                 charactor_unlock[dbr.GetInt16(2)] = false;
+                
+            }
             else
                 Debug.Log("job 테이블에 잘못된 값이 들어갔습니다. 잘못된 값 = " + dbr.GetInt16(2));
         }
@@ -99,11 +102,12 @@ public class TurnOnTheStage : MonoBehaviour {
         if(charactor_unlock[characterNum])
         {
             GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(true);
-            
         }
         else
         {
             GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(false);
+            //[characterNum];
+            // 상점에서 해당 번호의 Panel_Card를 Purchased로 텍스트 수정과 버튼 이벤트 제거 코드 삽입 요망
         }
     }
 
@@ -123,7 +127,7 @@ public class TurnOnTheStage : MonoBehaviour {
 
     public void turnStage()
     {
-        // db 닫기
+        /* db 닫기 */
         dbr.Close();
         dbr = null;
         dbcm.Dispose();
