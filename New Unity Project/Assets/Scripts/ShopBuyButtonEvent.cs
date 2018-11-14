@@ -26,7 +26,11 @@ public class ShopBuyButtonEvent : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(TurnOnTheStage.charactor_unlock[characterNum] == false)
+        {
+            Text_Cost.text = "Purchased";
+            gameObject.GetComponent<Button>().interactable = false;
+        }
 	}
 
     public void Buy()

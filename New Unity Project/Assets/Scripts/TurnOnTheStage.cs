@@ -69,7 +69,7 @@ public class TurnOnTheStage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(bTurnLeft)
+        if (bTurnLeft)
         {
             Debug.Log("Left");
             characterNum--;
@@ -108,6 +108,7 @@ public class TurnOnTheStage : MonoBehaviour {
             GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(false);
             //[characterNum];
             // 상점에서 해당 번호의 Panel_Card를 Purchased로 텍스트 수정과 버튼 이벤트 제거 코드 삽입 요망
+            //GameObject.Find("HomeScreen").transform.Find("Panel_Card_0" + characterNum.ToString()).transform.Find("Panel_Cost").GetComponent<Button>().interactable = false;
         }
     }
 
