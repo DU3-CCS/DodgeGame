@@ -19,6 +19,10 @@ public class connectScene : MonoBehaviour {
     {
         SceneManager.LoadScene("Lobby");
     }
+    public void LoadSceneAcheievemnet()
+    {
+        SceneManager.LoadScene("Achievements");
+    }
     public void loadSceneInGame()
     {
         SceneManager.LoadScene("Lv1");

@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioClip damage;        //재생할 소리를 변수로 담습니다.
-    public AudioClip skillDashUse;
-    public AudioClip skillSlowUse;
-    public AudioClip skillDefendUse;
-    public AudioClip skillDefendActive;
-    public AudioClip skillStunUse;
-    public AudioClip eat;
-    public AudioClip drinkPotion;
-    public AudioClip rottenMeat;
+    /* 재생할 소리를 변수로 담습니다. */
+    public AudioClip buttonClick;   //버튼 클릭음
+    public AudioClip buyShopItem;   //상점 구매 시
+    public AudioClip damage;        //피격 시
+    public AudioClip skillDashUse;  //대시 스킬 사용 시
+    public AudioClip skillSlowUse;  //슬로우 스킬 사용시
+    public AudioClip skillDefendUse;        //디펜드 스킬 사용 시
+    public AudioClip skillDefendActive;     //디펜드 스킬 발동 시
+    public AudioClip skillStunUse;          //스턴 스킬 사용 시
+    public AudioClip eat;                   //아이템 01 획득 시
+    public AudioClip drinkPotion;           //아이템 02 획득 시
+    public AudioClip rottenMeat;            //아이템 03 획득 시
 
     AudioSource myAudio;                    //AudioSorce 컴포넌트를 변수로 담습니다.
 
@@ -35,6 +38,14 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    public void ButtonClick()
+    {
+        myAudio.PlayOneShot(buttonClick);
+    }
+    public void BuyShopItem()
+    {
+        myAudio.PlayOneShot(buyShopItem);
+    }
     public void Damage()
     {
         myAudio.PlayOneShot(damage);

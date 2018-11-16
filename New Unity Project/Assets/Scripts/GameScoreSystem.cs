@@ -15,7 +15,7 @@ public class GameScoreSystem : MonoBehaviour {
     public int stage = 1;
     public float timeCount = 0;
     public int bestScore = 0;
-    private int clearScore = 1500;
+    private int clearScore = 15000;
 
     // sql 인스턴스 변수
     IDbConnection dbc;

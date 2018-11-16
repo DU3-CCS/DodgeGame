@@ -16,6 +16,7 @@ public class EnemyMoveLevel : MonoBehaviour
     public int maxTurnCount;
 
     public Animator animator;           //애니메이터
+    public GameObject star_B;       //파티클
 
     Vector3 lookDirection;
 
@@ -48,6 +49,14 @@ public class EnemyMoveLevel : MonoBehaviour
         if (gameObject.transform.position.x < -30 || gameObject.transform.position.x > 30 || gameObject.transform.position.z < -36 || gameObject.transform.position.x > 33)
         {
             Destroy(gameObject);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            GameObject items = Instantiate(star_B, transform.position, Quaternion.identity);
+            Destroy(items, 3);
         }
     }
 

@@ -29,6 +29,7 @@ public class TurnOnTheStage : MonoBehaviour {
     int value = 0;
 	// Use this for initialization
 	void Start () {
+        characterNum = 0;
         turn.eulerAngles = new Vector3(0, value, 0);
         // 각을 초기화합니다.
 

@@ -4,16 +4,17 @@ using System.Collections;
 
 public class SkillButton : MonoBehaviour
 {
-    public Image skillFilter;
-    public float coolTime;
-
     void start()
     {
-        skillFilter.fillAmount = 0;
+        
     }
-    
-    public void UseSkill()
+
+    private void Update()
     {
-        Debug.Log("Use Skill");
+        
+    }
+    public void SkillUse()
+    {
+        PlayerMove.SkillButton_Click();
     }
 }

@@ -11,7 +11,9 @@ public class PlayerMove : MonoBehaviour
     public Text HPLabel;        //체력 표시 UI
     public Image skill_01_image, skill_02_image, skill_03_image, skill_04_image = null; //스킬 이미지
     public GameObject[] enemy;      //적 배열
-    
+    public GameObject skill_01_button, skill_02_button, skill_03_button, skill_04_button;
+    public GameObject player;
+
     public int MaxHP, HP;           //최대 체력, 현재 체력
 
     public float S1_duration, S2_duration, S3_duration, S4_duration = 0.0f;         //지속시간 카운터
@@ -25,10 +27,8 @@ public class PlayerMove : MonoBehaviour
     public float ShowGuard;             //방어 이미지
     public float ShowGuardWaiting;      //방어 이미지 지속시간
 
-    public Animator animator;           //애니메이터
-
-    public float MoveSpeed = 20;        //기본 이동속도
-    Vector3 lookDirection;              //바라보는 방향
+    public static float skillUseCounter = 0;      //스킬 버튼 변수 비활성화용 counter
+    public static float timeCount = 0;
 
     private bool skill_01_Available = true; //스킬 사용 가능 표시
     private bool skill_02_Available = true;
@@ -37,13 +37,22 @@ public class PlayerMove : MonoBehaviour
 
     private bool skill_01_On, skill_02_On, skill_03_On, skill_04_On = false;    //스킬 사용 중
 
+    public static bool skillUse = false;    //스킬 버튼 bool 
+
     private bool ShowDamage_Available = true;
     private bool ShowGuard_Available = true;
 
     public static int item01Cnt, item02Cnt, item03Cnt = 0;
 
+    public Animator animator;           //애니메이터
+
+    public float MoveSpeed = 20;        //기본 이동속도
+    Vector3 lookDirection;              //바라보는 방향
+
     private void Start()
     {
+        if(!player) player = GameObject.FindGameObjectWithTag("Player");
+
         animator = GetComponent<Animator>();
         animator.SetBool("Dash", false);
         animator.SetBool("Defend", false);
@@ -70,83 +79,51 @@ public class PlayerMove : MonoBehaviour
         ShowGuard = 0.0f;         //방어 이미지 카운터
         ShowGuardWaiting = 0.5f;     //방어 이미지 지속시간 
 
-        //HP 설정
+
+
+        //스킬 버튼 연결, HP설정
         if (TurnOnTheStage.characterNum == 0)
         {
+            skill_01_button = GameObject.Find("Skill_Button_Dash");
+            skill_01_image = GameObject.Find("Skill_Dash").GetComponent<Image>();
+            skill_01_image.fillAmount = 1;
             MaxHP = 3;
         }
         else if (TurnOnTheStage.characterNum == 1)
         {
+            skill_02_button = GameObject.Find("Skill_Button_Slow");
+            skill_02_image = GameObject.Find("Skill_Slow").GetComponent<Image>();
+            skill_02_image.fillAmount = 1;
             MaxHP = 3;
         }
         else if (TurnOnTheStage.characterNum == 2)
         {
-            MaxHP = 2;
+            skill_03_button = GameObject.Find("Skill_Button_Defend");
+            skill_03_image = GameObject.Find("Skill_Defend").GetComponent<Image>();
+            skill_03_image.fillAmount = 1;
+            MaxHP = 3;
         }
         else if (TurnOnTheStage.characterNum == 3)
         {
+            skill_04_button = GameObject.Find("Skill_Button_Stun");
+            skill_04_image = GameObject.Find("Skill_Stun").GetComponent<Image>();
+            skill_04_image.fillAmount = 1;
             MaxHP = 2;
         }
         HP = MaxHP;
-
         HPLabel = GameObject.Find("HPLabel").GetComponent<Text>();          //HPLabel 연결
-
-        //스킬 버튼 연결
-        if (TurnOnTheStage.characterNum == 0)
-        {
-            skill_01_image = GameObject.Find("Skill_Dash").GetComponent<Image>();
-            skill_01_image.fillAmount = 1;
-        }
-        else if (TurnOnTheStage.characterNum == 1)
-        {
-            Debug.Log("슬로우 스킬 이미지");
-            skill_02_image = GameObject.Find("Skill_Slow").GetComponent<Image>();
-            skill_02_image.fillAmount = 1;
-        }
-        else if (TurnOnTheStage.characterNum == 2)
-        {
-            Debug.Log("디펜드 스킬 이미지");
-            skill_03_image = GameObject.Find("Skill_Defend").GetComponent<Image>();
-            skill_03_image.fillAmount = 1;
-        }
-        else if (TurnOnTheStage.characterNum == 3)
-        {
-            Debug.Log("스턴 스킬 이미지");
-            skill_04_image = GameObject.Find("Skill_Stun").GetComponent<Image>();
-            skill_04_image.fillAmount = 1;
-        }
     }
-  
+   
     private void Update()
     {
-        
-
-        //방향키 조작
-        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
-        {
-            MoveControl();          
-        }
-        
-        //직업별 스킬
-        if (TurnOnTheStage.characterNum == 0)
-        {
-            Skill_Dash();
-        }
-        else if (TurnOnTheStage.characterNum == 1)
-        {
-            Skill_Slow();
-        }
-        else if (TurnOnTheStage.characterNum == 2)
-        {
-            Skill_Defend();
-        }
-        else if (TurnOnTheStage.characterNum == 3)
-        {
-            Skill_Stun();
-        }
-
+        SkillButton_KeyBoard();
+        SkillUse();
 
         HPControl();
+        if (skillUse == true)
+        {
+            SkillButton_Click();
+        }
     }
 
     // Update is called once per frame
@@ -154,6 +131,80 @@ public class PlayerMove : MonoBehaviour
     {
         AnimationSet();
         ShowCondition();
+        //방향키 조작
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+        {
+            MoveControl();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            //데미지 표시
+
+            if (skill_03_On == true)
+            {
+                Debug.Log(S3_duration);
+                GameObject.Find("Image_Damage").transform.Find("Guard").gameObject.SetActive(true);
+                ShowGuard_Available = true;
+                SoundManager.instance.SkillDefendActive();  //디펜스 활성화 소리
+                gameObject.transform.Find("barrier").gameObject.SetActive(true);  //배리어 이펙트
+                Debug.Log("방어함");
+            }
+            else
+            {
+                GameObject.Find("Image_Damage").transform.Find("Damaged").gameObject.SetActive(true);
+                ShowDamage_Available = true;
+                SoundManager.instance.Damage();
+                Debug.Log("충돌!");
+                HP -= 1;
+            }
+            Debug.Log(HP);
+        }
+        if (other.gameObject.tag == "item03")
+        {
+            if (HP < MaxHP) HP += 1;
+            Destroy(other.gameObject);
+            SoundManager.instance.Eat();
+            Debug.Log("바나나!");
+            item01Cnt += 1;
+        }
+        if (other.gameObject.tag == "item28")
+        {
+            HP = MaxHP;
+            Destroy(other.gameObject);
+            SoundManager.instance.DrinkPotion();
+            Debug.Log("물약!");
+            item02Cnt += 1;
+        }
+        if (other.gameObject.tag == "item25")
+        {
+            HP -= 1;
+            Destroy(other.gameObject);
+            SoundManager.instance.RottenMeat();
+            Debug.Log("썩은고기!");
+            item03Cnt += 1;
+        }
+        if (other.gameObject.tag == "Cube") Debug.Log("CUBE!");
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            if (TurnOnTheStage.characterNum == 2)
+            {
+                gameObject.transform.Find("barrier").gameObject.SetActive(false);  //배리어 이펙트
+            }
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+
+    }
+    private void OnCollisionExit(Collision collision)
+    {
 
     }
 
@@ -191,12 +242,56 @@ public class PlayerMove : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Vertical");
         float vertical = Input.GetAxisRaw("Horizontal");
+        Debug.Log(horizontal);
         lookDirection = horizontal * Vector3.forward + vertical * Vector3.right;
 
         this.transform.rotation = Quaternion.LookRotation(lookDirection);
         this.transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
     }
 
+    void SkillUse()
+    {
+        //직업별 스킬
+        if (TurnOnTheStage.characterNum == 0)
+        {
+            Skill_Dash();
+        }
+        else if (TurnOnTheStage.characterNum == 1)
+        {
+            Skill_Slow();
+        }
+        else if (TurnOnTheStage.characterNum == 2)
+        {
+            Skill_Defend();
+        }
+        else if (TurnOnTheStage.characterNum == 3)
+        {
+            Skill_Stun();
+        }
+    }
+    void SkillButton_KeyBoard()     //스킬 버튼(Key)을 키보드로 누를 시
+    {
+        if (Input.GetButtonDown("Fire1")) skillUse = true;
+        else if (Input.GetButtonUp("Fire1")) skillUse = false;
+    }
+    public static void SkillButton_Click()
+    {
+        skillUse = true;
+        timeCount += Time.deltaTime;
+        if (timeCount > 1) {
+            timeCount = 0;
+            skillUse = false;
+        }
+    }   //스킬 버튼(GUI)을 누를 시
+    void AnimationSet()
+    {
+        //"Run" 애니메이션
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+        {
+            animator.SetBool("Run", true);
+        }
+        else animator.SetBool("Run", false);
+    }               //애니메이션 세팅
     void ShowCondition()                //상태 표시창
     {
         // ShowDamage
@@ -227,9 +322,10 @@ public class PlayerMove : MonoBehaviour
     {
         if (skill_01_Available == true) //스킬 활성화 일 때
         {
-            if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
+            if(skillUse == true)
             {
                 SoundManager.instance.SkillDashUse();  //스킬 사운드
+                player.transform.Find("Trail").gameObject.SetActive(true);  //대시 이펙트 추가
                 Debug.Log("대시 스킬 활성화");
                 MoveSpeed = 30;
                 animator.SetBool("Dash", true);
@@ -253,6 +349,7 @@ public class PlayerMove : MonoBehaviour
 
             if (S1_duration > S1_durationWaiting)       //지속시간이 끝나면
             {
+                player.transform.Find("Trail").gameObject.SetActive(false); //대시 이펙트 끄기
                 MoveSpeed = 20;
                 animator.SetBool("Dash", false);
                 S1_duration = 0;
@@ -271,9 +368,10 @@ public class PlayerMove : MonoBehaviour
     {
         if (skill_02_Available == true) //스킬 활성화 일 때
         {
-            if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
+            if(skillUse == true)
             {
                 SoundManager.instance.SkillSlowUse();  //스킬 사운드
+                player.transform.Find("ShockWave").gameObject.SetActive(true);  //슬로우 이펙트
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
                 {
@@ -289,7 +387,7 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            if (skill_03_On == true)
+            if (skill_02_On == true)
             {
                 S2_duration += Time.deltaTime;
             }
@@ -302,6 +400,7 @@ public class PlayerMove : MonoBehaviour
             if (S2_duration > S2_durationWaiting)       //지속시간이 끝나면
             {
                 //animator.SetBool("Dash", false);
+                player.transform.Find("ShockWave").gameObject.SetActive(false);  //슬로우 이펙트
                 S2_duration = 0;
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
@@ -323,9 +422,10 @@ public class PlayerMove : MonoBehaviour
     {
         if (skill_03_Available == true) //스킬 사용 가능일 때
         {
-            if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
+            if(skillUse == true)
             {
                 Debug.Log("방어 스킬 활성화");
+                player.transform.Find("ShockWave").gameObject.SetActive(true);  //슬로우 이펙트
                 animator.SetBool("Cast Spell", true);
                 skill_03_Available = false;     //스킬 사용 불가능
                 SoundManager.instance.SkillDefendUse();  //스킬 사운드
@@ -348,6 +448,7 @@ public class PlayerMove : MonoBehaviour
             if (S3_duration > S3_durationWaiting)       //지속시간이 끝나면
             {
                 //animator.SetBool("Dash", false);
+                player.transform.Find("ShockWave").gameObject.SetActive(false);  //슬로우 이펙트
                 S3_duration = 0;
                 skill_03_On = false;
             }
@@ -364,9 +465,10 @@ public class PlayerMove : MonoBehaviour
     {
         if (skill_04_Available == true) //스킬 활성화 일 때
         {
-            if (Input.GetButtonDown("Fire1"))  // 만약 Fire1(왼쪽 컨트롤)버튼이 눌리면 아래 내용을 실행.
+            if(skillUse == true)
             {
                 SoundManager.instance.SkillStunUse();  //스킬 사운드
+                player.transform.Find("ShockWave").gameObject.SetActive(true);  //슬로우 이펙트
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach(GameObject oneEnemy in enemy)
                 {
@@ -396,6 +498,7 @@ public class PlayerMove : MonoBehaviour
             if (S4_duration > S4_durationWaiting)       //지속시간이 끝나면
             {
                 //animator.SetBool("Dash", false);
+                player.transform.Find("ShockWave").gameObject.SetActive(false);  //슬로우 이펙트
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
                 {          
@@ -413,76 +516,8 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-    void AnimationSet()
-    {
-        //"Run" 애니메이션
-        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
-        {
-            animator.SetBool("Run", true);
-        }
-        else animator.SetBool("Run", false);
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-            //데미지 표시
-            
-            if (skill_03_On == true)
-            {
-                Debug.Log(S3_duration);
-                GameObject.Find("Image_Damage").transform.Find("Guard").gameObject.SetActive(true);
-                ShowGuard_Available = true;
-                SoundManager.instance.SkillDefendActive();
-                Debug.Log("방어함");
-            }
-            else {
-                GameObject.Find("Image_Damage").transform.Find("Damaged").gameObject.SetActive(true);
-                ShowDamage_Available = true;
-                SoundManager.instance.Damage();
-                Debug.Log("충돌!");
-                HP -= 1;
-            }
-            Debug.Log(HP);
-        }
-        if (other.gameObject.tag == "item03")
-        {
-            if(HP < MaxHP) HP += 1;
-            Destroy(other.gameObject);
-            SoundManager.instance.Eat();
-            Debug.Log("바나나!");
-            item01Cnt += 1;
-        }
-        if (other.gameObject.tag == "item28")
-        {
-            HP = MaxHP;         
-            Destroy(other.gameObject);
-            SoundManager.instance.DrinkPotion();
-            Debug.Log("물약!");
-            item02Cnt += 1;
-        }
-        if (other.gameObject.tag == "item25")
-        {
-            HP -= 1;
-            Destroy(other.gameObject);
-            SoundManager.instance.RottenMeat();
-            Debug.Log("썩은고기!");
-            item03Cnt += 1;
-        }
-        if (other.gameObject.tag == "Cube") Debug.Log("CUBE!");
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        
-    }
-    private void OnCollisionStay(Collision collision)
-    {
-        
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        
-    }
+
+
 }
  

@@ -54,6 +54,9 @@ public class ShopBuyButtonEvent : MonoBehaviour {
         {
             if (characterNum >= 0 && characterNum < 4)
             {
+                /* 사운드 */
+                SoundManager.instance.BuyShopItem();
+
                 /* DB에 저장 */
                 dbcm.CommandText = "INSERT INTO Job(characterID, job) VALUES(1, " + characterNum + ")";
                 Debug.Log("INSERT INTO Job(characterID, job) VALUES(1, " + characterNum + ")");
