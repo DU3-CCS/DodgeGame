@@ -24,6 +24,8 @@ public class EnemyMoveLevel : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        animator = GetComponent<Animator>(); //애니메이터 연결
+
         myposition = transform.position;
         target = GameObject.FindGameObjectWithTag("Player");
         transform.LookAt(target.transform);

@@ -396,7 +396,10 @@ public class PlayerMove : MonoBehaviour
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
                 {
-                    oneEnemy.GetComponent<EnemyMove>().Slow();
+                    if(oneEnemy.GetComponent<EnemyMove>())
+                        oneEnemy.GetComponent<EnemyMove>().Slow();
+                    else if(oneEnemy.GetComponent<EnemyMoveLevel>())
+                        oneEnemy.GetComponent<EnemyMoveLevel>().Slow();
                 }
                 Debug.Log("슬로우 스킬 활성화");
                 //animator.SetBool("Dash", true);

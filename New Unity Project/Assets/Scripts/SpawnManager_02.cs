@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager_02 : MonoBehaviour
 {
     public bool enableSpawn = false;
     public GameObject Enemy;
@@ -13,10 +13,8 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        if(connectScene.stage == 1) Stage1();
-        else if (connectScene.stage == 2) Stage2();
-        else if (connectScene.stage == 3) Stage3();
-        else if (connectScene.stage == 4) Stage3();
+        Stage3();
+
     }
 
     // Update is called once per frame

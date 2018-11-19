@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 0a8eaa4342dcbaa4cbb5b752c11ec735
-  - enabled: 0
-    path: 
-    guid: a0329dcb45188344bb80719d8cfbc3d9
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 7f23d03dd55d6d24ea4af49897fe58ca
+  - enabled: 1
+    path: Assets/Scenes/SelectStage.unity
+    guid: dd5fa42fca912a24f908da1a664e8750
   - enabled: 1
     path: Assets/Scenes/Lv1.unity
     guid: 99c9720ab356a0642a771bea13969a05
@@ -18,11 +21,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Lv2.unity
     guid: 62adae538ce358c48baee44875321818
   - enabled: 1
+    path: Assets/Scenes/Lv3.unity
+    guid: 4d02f54b1b41fc343bccf19ee2543fd2
+  - enabled: 1
+    path: Assets/Scenes/Lv4.unity
+    guid: 316c9d42d869e824985e7d0f3c11f315
+  - enabled: 1
     path: Assets/Scenes/PopUp.unity
     guid: c8a8158d4ee6b40a6aea1a14cb703e75
-  - enabled: 1
-    path: Assets/Scenes/Lobby.unity
-    guid: 7f23d03dd55d6d24ea4af49897fe58ca
   - enabled: 1
     path: Assets/Scenes/SettingsWindow.unity
     guid: 2326bd7b4b50dc548b92cfad2bb216fe
