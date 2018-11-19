@@ -49,14 +49,17 @@ public class PlayerMove : MonoBehaviour
     public float MoveSpeed = 20;        //기본 이동속도
     Vector3 lookDirection;              //바라보는 방향
 
+    public FixedJoystick fixedJoystick; // 조이스틱 스크립트
+
     private void Start()
     {
-        if(!player) player = GameObject.FindGameObjectWithTag("Player");
+        if (!fixedJoystick) fixedJoystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<FixedJoystick>();
+        if (!player) player = GameObject.FindGameObjectWithTag("Player");
 
         animator = GetComponent<Animator>();
         animator.SetBool("Dash", false);
         animator.SetBool("Defend", false);
-        
+
         S1_durationWaiting = 2;     //지속시간 
         S1_coolTimeWaiting = 5;     //쿨타임
         S1_leftTime = S1_coolTimeWaiting;
@@ -78,7 +81,6 @@ public class PlayerMove : MonoBehaviour
 
         ShowGuard = 0.0f;         //방어 이미지 카운터
         ShowGuardWaiting = 0.5f;     //방어 이미지 지속시간 
-
 
 
         //스킬 버튼 연결, HP설정
@@ -113,7 +115,7 @@ public class PlayerMove : MonoBehaviour
         HP = MaxHP;
         HPLabel = GameObject.Find("HPLabel").GetComponent<Text>();          //HPLabel 연결
     }
-   
+
     private void Update()
     {
         SkillButton_KeyBoard();
@@ -136,6 +138,8 @@ public class PlayerMove : MonoBehaviour
         {
             MoveControl();
         }
+        if (fixedJoystick.GetHorizontalValue() != 0 || fixedJoystick.GetVerticalValue() != 0)
+            MoveControl_Joystick();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -210,7 +214,7 @@ public class PlayerMove : MonoBehaviour
 
     void HPControl() //체력 관련
     {
-        
+
         if (MaxHP == 4)
         {
             if (HP == 4) HPLabel.text = "♥♥♥♥";
@@ -240,9 +244,21 @@ public class PlayerMove : MonoBehaviour
 
     void MoveControl() //플레이어 움직임
     {
-        float horizontal = Input.GetAxisRaw("Vertical");
-        float vertical = Input.GetAxisRaw("Horizontal");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
         Debug.Log(horizontal);
+        lookDirection = horizontal * Vector3.right + vertical * Vector3.forward;
+
+        this.transform.rotation = Quaternion.LookRotation(lookDirection);
+        this.transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
+    }
+
+    void MoveControl_Joystick() //플레이어 움직임
+    {
+        float horizontal = fixedJoystick.GetHorizontalValue();
+        float vertical = fixedJoystick.GetVerticalValue();
+        Debug.Log("Horizontal : " + horizontal);
+        Debug.Log("vertical : " + vertical);
         lookDirection = horizontal * Vector3.forward + vertical * Vector3.right;
 
         this.transform.rotation = Quaternion.LookRotation(lookDirection);
@@ -278,7 +294,8 @@ public class PlayerMove : MonoBehaviour
     {
         skillUse = true;
         timeCount += Time.deltaTime;
-        if (timeCount > 1) {
+        if (timeCount > 1)
+        {
             timeCount = 0;
             skillUse = false;
         }
@@ -290,6 +307,10 @@ public class PlayerMove : MonoBehaviour
         {
             animator.SetBool("Run", true);
         }
+        else if (fixedJoystick.GetHorizontalValue() != 0 || fixedJoystick.GetVerticalValue() != 0)
+        {
+            animator.SetBool("Run", true);
+        }
         else animator.SetBool("Run", false);
     }               //애니메이션 세팅
     void ShowCondition()                //상태 표시창
@@ -298,14 +319,14 @@ public class PlayerMove : MonoBehaviour
         if (ShowDamage_Available == true) //스킬 활성화 일 때
         {
             ShowDamage += Time.deltaTime;
-            
+
             if (ShowDamage > ShowDamageWaiting) //지속시간이 끝나면
             {
                 GameObject.Find("Image_Damage").transform.Find("Damaged").gameObject.SetActive(false);
                 ShowDamage_Available = false;
                 ShowDamage = 0;
             }
-        }       
+        }
         if (TurnOnTheStage.characterNum == 2 && skill_03_Available == false) //방어스킬 활성화 일 때
         {
             ShowGuard += Time.deltaTime;
@@ -322,7 +343,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (skill_01_Available == true) //스킬 활성화 일 때
         {
-            if(skillUse == true)
+            if (skillUse == true)
             {
                 SoundManager.instance.SkillDashUse();  //스킬 사운드
                 player.transform.Find("Trail").gameObject.SetActive(true);  //대시 이펙트 추가
@@ -361,14 +382,14 @@ public class PlayerMove : MonoBehaviour
                 skill_01_Available = true;
                 S1_coolTime = 0;
                 S1_leftTime = S1_coolTimeWaiting;
-            }            
+            }
         }
     }
     void Skill_Slow()         // Slow Skill
     {
         if (skill_02_Available == true) //스킬 활성화 일 때
         {
-            if(skillUse == true)
+            if (skillUse == true)
             {
                 SoundManager.instance.SkillSlowUse();  //스킬 사운드
                 player.transform.Find("ShockWave").gameObject.SetActive(true);  //슬로우 이펙트
@@ -422,7 +443,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (skill_03_Available == true) //스킬 사용 가능일 때
         {
-            if(skillUse == true)
+            if (skillUse == true)
             {
                 Debug.Log("방어 스킬 활성화");
                 player.transform.Find("ShockWave").gameObject.SetActive(true);  //슬로우 이펙트
@@ -436,7 +457,8 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            if(skill_03_On == true) {
+            if (skill_03_On == true)
+            {
                 S3_duration += Time.deltaTime;
             }
             S3_coolTime += Time.deltaTime;
@@ -465,12 +487,12 @@ public class PlayerMove : MonoBehaviour
     {
         if (skill_04_Available == true) //스킬 활성화 일 때
         {
-            if(skillUse == true)
+            if (skillUse == true)
             {
                 SoundManager.instance.SkillStunUse();  //스킬 사운드
                 player.transform.Find("ShockWave").gameObject.SetActive(true);  //슬로우 이펙트
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
-                foreach(GameObject oneEnemy in enemy)
+                foreach (GameObject oneEnemy in enemy)
                 {
                     oneEnemy.GetComponent<EnemyMove>().Stun();
                 }
@@ -501,7 +523,7 @@ public class PlayerMove : MonoBehaviour
                 player.transform.Find("ShockWave").gameObject.SetActive(false);  //슬로우 이펙트
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
-                {          
+                {
                     oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
                 }
                 S4_duration = 0;
@@ -520,4 +542,3 @@ public class PlayerMove : MonoBehaviour
 
 
 }
- 

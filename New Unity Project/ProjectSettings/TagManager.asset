@@ -10,6 +10,7 @@ TagManager:
   - item28
   - item03
   - item25
+  - Joystick
   layers:
   - Default
   - TransparentFX
