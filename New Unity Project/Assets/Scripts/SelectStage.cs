@@ -17,7 +17,7 @@ public class SelectStage : MonoBehaviour {
 	void Update () {
         if (StageManager.myLevel[stageNum - 1] == false)
         {
-            Text_Cost.text = "Lock";
+            Text_Cost.text = "Locked";
             gameObject.GetComponent<Button>().interactable = false;
         }
     }
@@ -33,7 +33,7 @@ public class SelectStage : MonoBehaviour {
                 scene.loadSceneLv1();
             else if (stageNum == 2)
                 scene.loadSceneLv2();
-            else if (stageNum == 4)
+            else if (stageNum == 3)
                 scene.loadSceneLv3();
             else if (stageNum == 4)
                 scene.loadSceneLv4();

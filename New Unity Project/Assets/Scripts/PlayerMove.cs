@@ -246,7 +246,6 @@ public class PlayerMove : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        Debug.Log(horizontal);
         lookDirection = horizontal * Vector3.right + vertical * Vector3.forward;
 
         this.transform.rotation = Quaternion.LookRotation(lookDirection);
@@ -429,7 +428,7 @@ public class PlayerMove : MonoBehaviour
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
                 {
-                    oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
+                        oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
                 }
                 skill_02_On = false;
             }
@@ -497,7 +496,10 @@ public class PlayerMove : MonoBehaviour
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
                 {
-                    oneEnemy.GetComponent<EnemyMove>().Stun();
+                    if (oneEnemy.GetComponent<EnemyMove>())
+                        oneEnemy.GetComponent<EnemyMove>().Stun();
+                    else if (oneEnemy.GetComponent<EnemyMoveLevel>())
+                        oneEnemy.GetComponent<EnemyMoveLevel>().Stun();
                 }
                 Debug.Log("스턴 스킬 활성화");
                 //animator.SetBool("Dash", true);
