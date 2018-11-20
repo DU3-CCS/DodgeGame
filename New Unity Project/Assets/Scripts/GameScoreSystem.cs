@@ -12,7 +12,7 @@ public class GameScoreSystem : MonoBehaviour {
     public Text Score;
     public Text Gold;
 
-    public int stage = 1;
+    public static int stage;
     public float timeCount = 0;
     public int bestScore = 0;
     private int clearScore = 15000;
@@ -24,14 +24,14 @@ public class GameScoreSystem : MonoBehaviour {
 
     // Use this for initialization
     void Start()
-    {
+    { 
         Stage = GameObject.Find("Stage").GetComponent<Text>();
         Best_Score = GameObject.Find("Best_Score_Text").GetComponent<Text>();
         Score = GameObject.Find("Score_Text").GetComponent<Text>();
         Gold = GameObject.Find("Gold").GetComponent<Text>();
 
         string constr = "URI=file:character.db";
-
+        Debug.Log(stage);
         dbc = new SqliteConnection(constr);
         dbc.Open();
         dbcm = dbc.CreateCommand();

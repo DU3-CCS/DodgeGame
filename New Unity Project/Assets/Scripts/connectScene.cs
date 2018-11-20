@@ -9,8 +9,8 @@ public class connectScene : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,22 +31,18 @@ public class connectScene : MonoBehaviour {
     public void loadSceneLv1()
     {
         SceneManager.LoadScene("Lv1");
-        stage = 1;
     }
     public void loadSceneLv2()
     {
         SceneManager.LoadScene("Lv2");
-        stage = 2;
     }
     public void loadSceneLv3()
     {
         SceneManager.LoadScene("Lv3");
-        stage = 3;
     }
     public void loadSceneLv4()
     {
         SceneManager.LoadScene("Lv4");
-        stage = 4;
     }
     public void loadSceneRestart()
     {
