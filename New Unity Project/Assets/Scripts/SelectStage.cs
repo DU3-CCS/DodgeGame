@@ -33,7 +33,7 @@ public class SelectStage : MonoBehaviour {
                 scene.loadSceneLv1();
             else if (stageNum == 2)
                 scene.loadSceneLv2();
-            else if (stageNum == 4)
+            else if (stageNum == 3)
                 scene.loadSceneLv3();
             else if (stageNum == 4)
                 scene.loadSceneLv4();
