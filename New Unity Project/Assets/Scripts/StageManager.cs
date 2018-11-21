@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Data;
-using Mono.Data.SqliteClient;
 
 public class StageManager : MonoBehaviour {
     public static bool[] myLevel = { true, false, false, false };
@@ -12,16 +11,11 @@ public class StageManager : MonoBehaviour {
     IDbCommand dbcm;        //SQL문 작동 개체
     IDataReader dbr;        //반환된 값 읽어주는 객체
 
+    DatabaseManager dbm = new DatabaseManager();
+
     // Use this for initialization
     void Start () {
-        string constr = "URI=file:character.db";
-
-        dbc = new SqliteConnection(constr);
-        dbc.Open();
-        dbcm = dbc.CreateCommand();
-
-        dbcm.CommandText = "SELECT stage, clearCount from Stage";
-        dbr = dbcm.ExecuteReader();
+        dbr = dbm.SelectData("SELECT stage, clearCount from Stage");
 
         while (dbr.Read())
         {
@@ -41,12 +35,6 @@ public class StageManager : MonoBehaviour {
         }
 
         /* DB 연결 정보들을 초기화 합니다. */
-        dbr.Close();
-        dbr = null;
-        dbcm.Dispose();
-        dbcm = null;
-        dbc.Close();
-        dbc = null;
     }
 	
 	// Update is called once per frame

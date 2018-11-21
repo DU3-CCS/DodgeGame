@@ -670,7 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c08d8559c9ac68428c23fd445766bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardID: 2010
+  rewardID: 2040
   rewardGold: 100
   Button: {fileID: 1396944061520328}
   Text_Completed: {fileID: 1328848468106782}

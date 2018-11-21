@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Data;
-using Mono.Data.SqliteClient;
 
 public class ShopBuyButtonEvent : MonoBehaviour {
     public int characterNum;
@@ -15,6 +14,8 @@ public class ShopBuyButtonEvent : MonoBehaviour {
     IDbConnection dbc;
     IDbCommand dbcm;        //SQL문 작동 개체
     IDataReader dbr;        //반환된 값 읽어주는 객체
+
+    DatabaseManager dbm = DatabaseManager.dbm;
 
     int money = 0;
 
@@ -35,20 +36,13 @@ public class ShopBuyButtonEvent : MonoBehaviour {
 
     public void Buy()
     {
-        string constr = "URI=file:character.db";
-
-        dbc = new SqliteConnection(constr);
-        dbc.Open();
-        dbcm = dbc.CreateCommand();
-
-        dbcm.CommandText = "SELECT * FROM Character";
-
-        dbr = dbcm.ExecuteReader();
+        dbr = dbm.SelectData("SELECT * FROM Character");
 
         if (dbr.Read())
         {
             money = dbr.GetInt16(1);
         }
+        dbm.Disconnect();
 
         if(money >= cost)
         {
@@ -58,29 +52,25 @@ public class ShopBuyButtonEvent : MonoBehaviour {
                 SoundManager.instance.BuyShopItem();
 
                 /* DB에 저장 */
-                dbcm.CommandText = "INSERT INTO Job(characterID, job) VALUES(1, " + characterNum + ")";
-                Debug.Log("INSERT INTO Job(characterID, job) VALUES(1, " + characterNum + ")");
-                dbcm.ExecuteNonQuery();
+                dbm.UpdateData("INSERT INTO Job(characterID, job) VALUES(1, " + characterNum + ")");
                 TurnOnTheStage.charactor_unlock[characterNum] = false;
 
                 /* 구입 업적 추가 */
-                dbcm.CommandText = "SELECT ID, condition, state FROM record WHERE ID = " + characterNum;
-                dbr = dbcm.ExecuteReader();
+                dbr = dbm.SelectData("SELECT ID, condition, state FROM record WHERE ID = " + characterNum);
 
                 if(dbr.Read())
                 {
-                    if (dbr.GetInt16(2) == 0)
+                    int ID = dbr.GetInt16(0);
+                    int state = dbr.GetInt16(2);
+                    if (state == 0)
                     {
-                        dbcm.CommandText = "UPDATE Record SET state = 1 WHERE ID = " + dbr.GetInt16(0);
-                        dbcm.ExecuteNonQuery();
+                        dbm.UpdateData("UPDATE Record SET state = 1 WHERE ID = " + ID);
                     }
                 }
 
                 /* 비용 감소 */
                 money -= cost;
-                dbcm.CommandText = "UPDATE Character SET money = " + money;
-                Debug.Log("UPDATE Character SET money = " + money);
-                dbcm.ExecuteNonQuery();
+                dbm.UpdateData("UPDATE Character SET money = " + money);
                 
                 /* 돈 컴포넌트 값 변경*/
                 Text_ResourceAmount.text = money.ToString();
@@ -90,12 +80,5 @@ public class ShopBuyButtonEvent : MonoBehaviour {
                 // Buy 버튼 클릭 불가능하게 수정
             }
         }
-
-        dbr.Close();
-        dbr = null;
-        dbcm.Dispose();
-        dbcm = null;
-        dbc.Close();
-        dbc = null;
     }
 }

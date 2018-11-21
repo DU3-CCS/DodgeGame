@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Data;
-using Mono.Data.SqliteClient;
 
 public class GameScoreSystem : MonoBehaviour {
 
@@ -18,9 +17,9 @@ public class GameScoreSystem : MonoBehaviour {
     private int clearScore = 15000;
 
     // sql 인스턴스 변수
-    IDbConnection dbc;
-    IDbCommand dbcm;        //SQL문 작동 개체
     IDataReader dbr;        //반환된 값 읽어주는 객체
+
+    DatabaseManager dbm = DatabaseManager.dbm;
 
     // Use this for initialization
     void Start()
@@ -29,13 +28,7 @@ public class GameScoreSystem : MonoBehaviour {
         Best_Score = GameObject.Find("Best_Score_Text").GetComponent<Text>();
         Score = GameObject.Find("Score_Text").GetComponent<Text>();
         Gold = GameObject.Find("Gold").GetComponent<Text>();
-
-        string constr = "URI=file:character.db";
-        Debug.Log(stage);
-        dbc = new SqliteConnection(constr);
-        dbc.Open();
-        dbcm = dbc.CreateCommand();
-
+        
         int score = GameManager.gameScore;
         int gold = GameManager.gold;
         int revenueMoney;
@@ -44,7 +37,7 @@ public class GameScoreSystem : MonoBehaviour {
         Stage.text = "Stage " + stage;
         Score.text = score.ToString();
         Gold.text = gold + "G";
-
+        
         bestScore = SelectBestScore(score);         // DB에서 해당 스테이지 최고점수 반환
         Best_Score.text = bestScore.ToString();     // 최고점수 세팅
 
@@ -72,29 +65,29 @@ public class GameScoreSystem : MonoBehaviour {
     int SelectBestScore(int score)
     {
         int dbScore;
-
-        dbcm.CommandText = "SELECT score, playCount, clearCount FROM Stage WHERE Stage = " + stage;
-        dbr = dbcm.ExecuteReader();
+        
+        dbr = dbm.SelectData("SELECT score, playCount, clearCount FROM Stage WHERE Stage = " + stage);
 
         if (dbr.Read())
         {
-            dbcm.CommandText = "UPDATE Stage SET playCount = " + (dbr.GetInt16(1) + 1);
-            dbcm.ExecuteNonQuery();
-            Debug.Log("stage = " + stage + ", score = " + score);
+            int dbBestScore = dbr.GetInt16(0);
+            int playCount = dbr.GetInt16(1) + 1;
+
+            dbm.Disconnect();
+            dbm.UpdateData("UPDATE Stage SET playCount = " + playCount);
             // DB에 저장된 최고 점수와 현재 점수 비교
-            if (dbr.GetInt16(0) > score)
-                dbScore = dbr.GetInt16(0);
+            if (dbBestScore > score)
+                dbScore = dbBestScore;
             else
             {
-                dbcm.CommandText = "UPDATE Stage SET score = " + score + " WHERE stage = " + stage;
-                dbcm.ExecuteNonQuery();
+                dbm.UpdateData("UPDATE Stage SET score = " + score + " WHERE stage = " + stage);
                 dbScore = score;
             }
         }
         else
         {
-            dbcm.CommandText = "INSERT INTO Stage(stage, score, playCount, clearCount) VALUES(" + stage + ", " + score + ", 0, 0)";
-            dbcm.ExecuteNonQuery();
+            dbm.Disconnect();
+            dbm.UpdateData("INSERT INTO Stage(stage, score, playCount, clearCount) VALUES(" + stage + ", " + score + ", 0, 0)");
             dbScore = score;
         }
 
@@ -110,16 +103,15 @@ public class GameScoreSystem : MonoBehaviour {
     {
         int clearCount = 0;
         
-        dbcm.CommandText = "SELECT score, playCount, clearCount FROM Stage WHERE Stage = " + stage;
-        dbr = dbcm.ExecuteReader();
+        dbr = dbm.SelectData("SELECT score, playCount, clearCount FROM Stage WHERE Stage = " + stage);
 
         if (score >= clearScore)
         {
             if (dbr.Read())
             {
                 clearCount = dbr.GetInt16(2) + 1;
-                dbcm.CommandText = "UPDATE Stage SET clearCount = " + clearCount;
-                dbcm.ExecuteNonQuery();
+                dbm.Disconnect();
+                dbm.UpdateData("UPDATE Stage SET clearCount = " + clearCount);
             }
         }
 
@@ -135,9 +127,8 @@ public class GameScoreSystem : MonoBehaviour {
     {
         int money;
         int revenueMoney;
-
-        dbcm.CommandText = "SELECT * FROM Character";
-        dbr = dbcm.ExecuteReader();
+        
+        dbr = dbm.SelectData("SELECT * FROM Character");
 
         if (dbr.Read())
         {
@@ -151,9 +142,8 @@ public class GameScoreSystem : MonoBehaviour {
         }
         money += gold;
         revenueMoney += gold;
-
-        dbcm.CommandText = "UPDATE Character SET money = " + money + ", revenueMoney = " + revenueMoney;
-        dbcm.ExecuteNonQuery();
+        
+        dbm.UpdateData("UPDATE Character SET money = " + money + ", revenueMoney = " + revenueMoney);
 
         return revenueMoney;
     }
@@ -164,15 +154,17 @@ public class GameScoreSystem : MonoBehaviour {
     /// <param name="revenueMoney">수익 골드</param>
     void UpdateMoneyRecord(int revenueMoney)
     {
-        dbcm.CommandText = "SELECT ID, condition, state FROM record WHERE ID BETWEEN 200 and 299";
-        dbr = dbcm.ExecuteReader();
+        dbr = dbm.SelectData("SELECT ID, condition, state FROM record WHERE ID BETWEEN 200 and 299");
 
         while (dbr.Read())
         {
-            if (dbr.GetInt16(2) == 0 && revenueMoney >= dbr.GetInt16(1))
+            int ID = dbr.GetInt16(0);
+            int condition = dbr.GetInt16(1);
+            int state = dbr.GetInt16(2);
+
+            if (state == 0 && revenueMoney >= condition)
             {
-                dbcm.CommandText = "UPDATE Record SET state = 1 WHERE ID = " + dbr.GetInt16(0);
-                dbcm.ExecuteNonQuery();
+                dbm.UpdateData("UPDATE Record SET state = 1 WHERE ID = " + ID);
             }
         }
     }
@@ -191,15 +183,17 @@ public class GameScoreSystem : MonoBehaviour {
             strStage = stage.ToString();
 
         // ex) 1 Stage = BETWEEN 1010 and 1019, 2 Stage = BETWEEN 1020 and 1029, 10 Stage = BETWEEN 1100 and 1109
-        dbcm.CommandText = "SELECT ID, condition, state FROM Record WHERE ID BETWEEN 1" + strStage + "0 and 10" + strStage + "9";
-        dbr = dbcm.ExecuteReader();
+        dbr = dbm.SelectData("SELECT ID, condition, state FROM Record WHERE ID BETWEEN 1" + strStage + "0 and 1" + strStage + "9");
 
         while (dbr.Read())
         {
-            if (dbr.GetInt16(2) == 0 && score >= dbr.GetInt16(1))
+            int ID = dbr.GetInt16(0);
+            int condition = dbr.GetInt16(1);
+            int state = dbr.GetInt16(2);
+
+            if (state == 0 && score >= condition)
             {
-                dbcm.CommandText = "UPDATE Record SET state = 1 WHERE ID = " + dbr.GetInt16(0);
-                dbcm.ExecuteNonQuery();
+                dbm.UpdateData("UPDATE Record SET state = 1 WHERE ID = " + ID);
             }
         }
     }
@@ -218,15 +212,17 @@ public class GameScoreSystem : MonoBehaviour {
             strStage = stage.ToString();
 
         // ex) 1 Stage = BETWEEN 2010 and 2019, 2 Stage = BETWEEN 2020 and 2029, 10 Stage = BETWEEN 2100 and 2109
-        dbcm.CommandText = "SELECT ID, condition, state FROM record WHERE ID BETWEEN 2" + strStage + "0 and 2" + strStage + "9";
-        dbr = dbcm.ExecuteReader();
+        dbr = dbm.SelectData("SELECT ID, condition, state FROM Record WHERE ID BETWEEN 2" + strStage + "0 and 2" + strStage + "9");
 
         while (dbr.Read())
         {
-            if (dbr.GetInt16(2) == 0 && clearCount >= dbr.GetInt16(1))
+            int ID = dbr.GetInt16(0);
+            int condition = dbr.GetInt16(1);
+            int state = dbr.GetInt16(2);
+
+            if (state == 0 && clearCount >= condition)
             {
-                dbcm.CommandText = "UPDATE Record SET state = 1 WHERE ID = " + dbr.GetInt16(0);
-                dbcm.ExecuteNonQuery();
+                dbm.UpdateData("UPDATE Record SET state = 1 WHERE ID = " + ID);
             }
         }
     }
@@ -237,36 +233,27 @@ public class GameScoreSystem : MonoBehaviour {
     void UpdatePlayCountRecord()
     {
         int playCount = 0;
-
-        dbcm.CommandText = "SELECT sum(playCount) FROM Stage";
-        dbr = dbcm.ExecuteReader();
+        
+        dbr = dbm.SelectData("SELECT sum(playCount) FROM Stage");
 
         if (dbr.Read())
         {
             playCount = dbr.GetInt16(0);
         }
-
-        dbcm.CommandText = "SELECT ID, condition, state FROM record WHERE ID BETWEEN 100 and 199";
-        dbr = dbcm.ExecuteReader();
+        dbm.Disconnect();
+        
+        dbr = dbm.SelectData("SELECT ID, condition, state FROM record WHERE ID BETWEEN 100 and 199");
 
         while (dbr.Read())
         {
-            if (dbr.GetInt16(2) == 0 && playCount >= dbr.GetInt16(1))
+            int ID = dbr.GetInt16(0);
+            int condition = dbr.GetInt16(1);
+            int state = dbr.GetInt16(2);
+            
+            if (state == 0 && playCount >= condition)
             {
-                dbcm.CommandText = "UPDATE Record SET state = 1 WHERE ID = " + dbr.GetInt16(0);
-                dbcm.ExecuteNonQuery();
+                dbm.UpdateData("UPDATE Record SET state = 1 WHERE ID = " + ID);
             }
         }
-    }
-
-    void OnDisable()
-    {
-        /* DB 연결 정보들을 초기화 합니다. */
-        dbr.Close();
-        dbr = null;
-        dbcm.Dispose();
-        dbcm = null;
-        dbc.Close();
-        dbc = null;
     }
 }

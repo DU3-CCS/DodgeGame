@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Data;
-using Mono.Data.SqliteClient;
 
 public class RecordManager : MonoBehaviour
 {
@@ -19,21 +18,14 @@ public class RecordManager : MonoBehaviour
     private Text Text_Completed;
 
     // sql 인스턴스 변수
-    IDbConnection dbc;
-    IDbCommand dbcm;        //SQL문 작동 개체
     IDataReader dbr;        //반환된 값 읽어주는 객체
+
+    DatabaseManager dbm = DatabaseManager.dbm;
 
     // Use this for initialization
     void Start()
     {
-        string constr = "URI=file:character.db";
-
-        dbc = new SqliteConnection(constr);
-        dbc.Open();
-        dbcm = dbc.CreateCommand();
-
-        dbcm.CommandText = "SELECT * FROM Record";
-        dbr = dbcm.ExecuteReader();
+        dbr = dbm.SelectData("SELECT * FROM Record");
         
         while (dbr.Read())
         {
@@ -60,8 +52,7 @@ public class RecordManager : MonoBehaviour
 
                 if(id >= 0 && id < 100)
                 {
-                    dbcm.CommandText = "SELECT job FROM Job";
-                    idr = dbcm.ExecuteReader();
+                    idr = dbm.SelectData("SELECT job FROM Job");
 
                     if(idr.Read())
                     {
@@ -71,8 +62,7 @@ public class RecordManager : MonoBehaviour
                 }
                 else if(id >= 100 && id < 200)
                 {
-                    dbcm.CommandText = "SELECT sum(playCount) FROM Stage";
-                    idr = dbcm.ExecuteReader();
+                    idr = dbm.SelectData("SELECT sum(playCount) FROM Stage");
 
                     if (idr.Read())
                     {
@@ -82,8 +72,7 @@ public class RecordManager : MonoBehaviour
                 }
                 else if(id >= 200 && id < 300)
                 {
-                    dbcm.CommandText = "SELECT revenueMoney FROM Character";
-                    idr = dbcm.ExecuteReader();
+                    idr = dbm.SelectData("SELECT revenueMoney FROM Character");
 
                     if (idr.Read())
                     {
@@ -94,9 +83,8 @@ public class RecordManager : MonoBehaviour
                 else if(id >= 2000 && id < 3000)
                 {
                     int stage = (id % 1000) / 10;
-
-                    dbcm.CommandText = "SELECT clearCount FROM Stage WHERE stage = " + stage;
-                    idr = dbcm.ExecuteReader();
+                    
+                    idr = dbm.SelectData("SELECT clearCount FROM Stage WHERE stage = " + stage);
 
                     if (idr.Read())
                     {
@@ -135,13 +123,7 @@ public class RecordManager : MonoBehaviour
             goTemp.transform.localScale = new Vector3(1, 1, 1);
         }
 
-        /* db 닫기 */
-        dbr.Close();
-        dbr = null;
-        dbcm.Dispose();
-        dbcm = null;
-        dbc.Close();
-        dbc = null;
+        dbm.Disconnect();
     }
 
     // Update is called once per frame

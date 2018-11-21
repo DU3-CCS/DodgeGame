@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 // SceneManagement : 씬 전환을 위한 것
 using System.Data;
-using Mono.Data.SqliteClient;
 // SQL : SQLite 연동하는 것
 
 public class TurnOnTheStage : MonoBehaviour {
@@ -22,9 +21,9 @@ public class TurnOnTheStage : MonoBehaviour {
     public static bool[] charactor_unlock = { true, true, true, true };
 
     // sql 인스턴스 변수
-    IDbConnection dbc;
-    IDbCommand dbcm;        //SQL문 작동 개체
     IDataReader dbr;        //반환된 값 읽어주는 객체
+
+    DatabaseManager dbm = DatabaseManager.dbm;
 
     int value = 0;
 	// Use this for initialization
@@ -32,40 +31,33 @@ public class TurnOnTheStage : MonoBehaviour {
         characterNum = 0;
         turn.eulerAngles = new Vector3(0, value, 0);
         // 각을 초기화합니다.
-
-        string constr = "URI=file:character.db";
-
-        dbc = new SqliteConnection(constr);
-        dbc.Open();
-        dbcm = dbc.CreateCommand();
-
-        dbcm.CommandText = "SELECT * FROM Job";
-
-        dbr = dbcm.ExecuteReader();
+        
+        dbr = dbm.SelectData("SELECT * FROM Job");
 
         while (dbr.Read())
         {
             if (dbr.GetInt16(2) >= 0 && dbr.GetInt16(2) < 4)
             {
                 charactor_unlock[dbr.GetInt16(2)] = false;
-                
+
             }
             else
                 Debug.Log("job 테이블에 잘못된 값이 들어갔습니다. 잘못된 값 = " + dbr.GetInt16(2));
         }
 
         Text_ResourceAmount = GameObject.Find("Text_ResourceAmount").GetComponent<Text>();
-
-        dbcm.CommandText = "SELECT * FROM Character";
-
-        dbr = dbcm.ExecuteReader();
+        dbm.Disconnect();
+        
+        dbr = dbm.SelectData("SELECT * FROM Character");
 
         if (dbr.Read())
         {
-            strMoney = dbr.GetString(1);
+            int m = dbr.GetInt16(1);
+            strMoney = m.ToString();
         }
 
         Text_ResourceAmount.text = strMoney;
+        dbm.Disconnect();
     }
 	
 	// Update is called once per frame
@@ -129,14 +121,6 @@ public class TurnOnTheStage : MonoBehaviour {
 
     public void turnStage()
     {
-        /* db 닫기 */
-        dbr.Close();
-        dbr = null;
-        dbcm.Dispose();
-        dbcm = null;
-        dbc.Close();
-        dbc = null;
-
         // 스테이지 전환을 위한 함수
         SceneManager.LoadScene("OnTheStage");
     }
