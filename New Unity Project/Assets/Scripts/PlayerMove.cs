@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
-    public List<Item> items = new List<Item>();
     public Text HPLabel;        //체력 표시 UI
     public Image skill_01_image, skill_02_image, skill_03_image, skill_04_image = null; //스킬 이미지
     public GameObject[] enemy;      //적 배열
@@ -543,7 +542,4 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-
-
-
 }

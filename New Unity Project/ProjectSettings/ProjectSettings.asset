@@ -758,9 +758,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: febe94d2-c5c2-49ea-8dbb-af636ba93952
-  projectName: DodgeGame
-  organizationId: sosocom95
+  cloudProjectId: 3d38ad30-cc5e-4e1b-a434-5ac3ecd1683b
+  projectName: Veteran
+  organizationId: unity_94tiger
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
