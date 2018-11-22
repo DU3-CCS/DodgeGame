@@ -72,7 +72,7 @@ public class DatabaseManager
 
         if (Application.platform != RuntimePlatform.Android)
         {
-            path = Application.dataPath + "/character.db";
+            path = Application.dataPath + "/StreamingAssets/character.db";
         }
         else
         {
