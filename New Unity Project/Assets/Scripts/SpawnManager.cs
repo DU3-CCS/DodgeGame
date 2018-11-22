@@ -144,15 +144,15 @@ public class SpawnManager : MonoBehaviour
         InvokeRepeating("SpawnEnemy_T", 3, 5);
         InvokeRepeating("SpawnEnemy_B", 4, 5);
 
-        InvokeRepeating("SpawnEnemy_L", 30, 10);
-        InvokeRepeating("SpawnEnemy_R", 31, 10);
-        InvokeRepeating("SpawnEnemy_T", 32, 10);
-        InvokeRepeating("SpawnEnemy_B", 33, 10);
+        InvokeRepeating("SpawnEnemy_L", 30, 15);
+        InvokeRepeating("SpawnEnemy_R", 31, 15);
+        InvokeRepeating("SpawnEnemy_T", 32, 15);
+        InvokeRepeating("SpawnEnemy_B", 33, 15);
 
-        InvokeRepeating("SpawnEnemy_L", 60, 20);
-        InvokeRepeating("SpawnEnemy_R", 61, 20);
-        InvokeRepeating("SpawnEnemy_T", 62, 20);
-        InvokeRepeating("SpawnEnemy_B", 63, 20);
+        InvokeRepeating("SpawnEnemy_L", 60, 25);
+        InvokeRepeating("SpawnEnemy_R", 61, 25);
+        InvokeRepeating("SpawnEnemy_T", 62, 25);
+        InvokeRepeating("SpawnEnemy_B", 63, 25);
     }
 
     void Stage2()
@@ -166,15 +166,15 @@ public class SpawnManager : MonoBehaviour
         InvokeRepeating("SpawnEnemy02_T", 3, 5);
         InvokeRepeating("SpawnEnemy02_B", 4, 5);
 
-        InvokeRepeating("SpawnEnemy02_L", 30, 10);
-        InvokeRepeating("SpawnEnemy02_R", 31, 10);
-        InvokeRepeating("SpawnEnemy02_T", 32, 10);
-        InvokeRepeating("SpawnEnemy02_B", 33, 10);
+        InvokeRepeating("SpawnEnemy02_L", 30, 15);
+        InvokeRepeating("SpawnEnemy02_R", 31, 15);
+        InvokeRepeating("SpawnEnemy02_T", 32, 15);
+        InvokeRepeating("SpawnEnemy02_B", 33, 15);
 
-        InvokeRepeating("SpawnEnemy02_L", 60, 20);
-        InvokeRepeating("SpawnEnemy02_R", 61, 20);
-        InvokeRepeating("SpawnEnemy02_T", 62, 20);
-        InvokeRepeating("SpawnEnemy02_B", 63, 20);
+        InvokeRepeating("SpawnEnemy02_L", 60, 25);
+        InvokeRepeating("SpawnEnemy02_R", 61, 25);
+        InvokeRepeating("SpawnEnemy02_T", 62, 25);
+        InvokeRepeating("SpawnEnemy02_B", 63, 25);
     }
 
     void Stage3()
@@ -193,14 +193,14 @@ public class SpawnManager : MonoBehaviour
         InvokeRepeating("SpawnEnemy02_T", 8, 10);
         InvokeRepeating("SpawnEnemy02_B", 9, 10);
 
-        InvokeRepeating("SpawnEnemy_L", 30, 10);
-        InvokeRepeating("SpawnEnemy02_R", 31, 10);
-        InvokeRepeating("SpawnEnemy_T", 32, 10);
-        InvokeRepeating("SpawnEnemy02_B", 33, 10);
+        InvokeRepeating("SpawnEnemy_L", 30, 15);
+        InvokeRepeating("SpawnEnemy02_R", 31, 15);
+        InvokeRepeating("SpawnEnemy_T", 32, 15);
+        InvokeRepeating("SpawnEnemy02_B", 33, 15);
 
-        InvokeRepeating("SpawnEnemy02_L", 60, 20);
-        InvokeRepeating("SpawnEnemy_R", 61, 20);
-        InvokeRepeating("SpawnEnemy02_T", 62, 20);
-        InvokeRepeating("SpawnEnemy_B", 63, 20);
+        InvokeRepeating("SpawnEnemy02_L", 60, 25);
+        InvokeRepeating("SpawnEnemy_R", 61, 25);
+        InvokeRepeating("SpawnEnemy02_T", 62, 25);
+        InvokeRepeating("SpawnEnemy_B", 63, 25);
     }
 }

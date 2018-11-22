@@ -59,20 +59,20 @@ public class PlayerMove : MonoBehaviour
         animator.SetBool("Dash", false);
         animator.SetBool("Defend", false);
 
-        S1_durationWaiting = 2;     //지속시간 
+        S1_durationWaiting = 1;     //지속시간 
         S1_coolTimeWaiting = 5;     //쿨타임
         S1_leftTime = S1_coolTimeWaiting;
 
-        S2_durationWaiting = 3;     //지속시간 
-        S2_coolTimeWaiting = 15;     //쿨타임
+        S2_durationWaiting = 1;     //지속시간 
+        S2_coolTimeWaiting = 6;     //쿨타임
         S2_leftTime = S2_coolTimeWaiting;
 
-        S3_durationWaiting = 4;     //지속시간 
-        S3_coolTimeWaiting = 15;     //쿨타임
+        S3_durationWaiting = 2;     //지속시간 
+        S3_coolTimeWaiting = 7;     //쿨타임
         S3_leftTime = S3_coolTimeWaiting;
 
-        S4_durationWaiting = 2;     //지속시간 
-        S4_coolTimeWaiting = 5;     //쿨타임
+        S4_durationWaiting = 1;     //지속시간 
+        S4_coolTimeWaiting = 4;     //쿨타임
         S4_leftTime = S4_coolTimeWaiting;
 
         ShowDamage = 0.0f;         //데미지 이미지 카운터
@@ -95,7 +95,7 @@ public class PlayerMove : MonoBehaviour
             skill_02_button = GameObject.Find("Skill_Button_Slow");
             skill_02_image = GameObject.Find("Skill_Slow").GetComponent<Image>();
             skill_02_image.fillAmount = 1;
-            MaxHP = 3;
+            MaxHP = 4;
         }
         else if (TurnOnTheStage.characterNum == 2)
         {
@@ -109,7 +109,7 @@ public class PlayerMove : MonoBehaviour
             skill_04_button = GameObject.Find("Skill_Button_Stun");
             skill_04_image = GameObject.Find("Skill_Stun").GetComponent<Image>();
             skill_04_image.fillAmount = 1;
-            MaxHP = 2;
+            MaxHP = 4;
         }
         HP = MaxHP;
         HPLabel = GameObject.Find("HPLabel").GetComponent<Text>();          //HPLabel 연결
@@ -427,7 +427,10 @@ public class PlayerMove : MonoBehaviour
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
                 {
+                    if (oneEnemy.GetComponent<EnemyMove>())
                         oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
+                    else if (oneEnemy.GetComponent<EnemyMoveLevel>())
+                        oneEnemy.GetComponent<EnemyMoveLevel>().ReleaseSkill();
                 }
                 skill_02_On = false;
             }
@@ -528,7 +531,10 @@ public class PlayerMove : MonoBehaviour
                 enemy = GameObject.FindGameObjectsWithTag("Enemy");
                 foreach (GameObject oneEnemy in enemy)
                 {
-                    oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
+                    if (oneEnemy.GetComponent<EnemyMove>())
+                        oneEnemy.GetComponent<EnemyMove>().ReleaseSkill();
+                    else if (oneEnemy.GetComponent<EnemyMoveLevel>())
+                        oneEnemy.GetComponent<EnemyMoveLevel>().ReleaseSkill();
                 }
                 S4_duration = 0;
                 skill_04_On = false;

@@ -9,6 +9,8 @@ using System.Data;
 // SQL : SQLite 연동하는 것
 
 public class TurnOnTheStage : MonoBehaviour {
+    public Button buttonStart;
+
     bool bTurnLeft = false;
     bool bTurnRight = false;
     private Quaternion turn = Quaternion.identity;
@@ -26,8 +28,9 @@ public class TurnOnTheStage : MonoBehaviour {
     DatabaseManager dbm = DatabaseManager.dbm;
 
     int value = 0;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
+
         characterNum = 0;
         turn.eulerAngles = new Vector3(0, value, 0);
         // 각을 초기화합니다.
@@ -95,10 +98,14 @@ public class TurnOnTheStage : MonoBehaviour {
         if(charactor_unlock[characterNum])
         {
             GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(true);
+            buttonStart.interactable = false;
         }
         else
         {
             GameObject.Find("Lock_Message").transform.Find("GameObject").gameObject.SetActive(false);
+            //start.transform.Find("Button_Start").GetComponent<Button>().interactable = true;
+            buttonStart.interactable = true;
+
             //[characterNum];
             // 상점에서 해당 번호의 Panel_Card를 Purchased로 텍스트 수정과 버튼 이벤트 제거 코드 삽입 요망
             //GameObject.Find("HomeScreen").transform.Find("Panel_Card_0" + characterNum.ToString()).transform.Find("Panel_Cost").GetComponent<Button>().interactable = false;
