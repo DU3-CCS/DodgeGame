@@ -14,7 +14,7 @@ public class GameScoreSystem : MonoBehaviour {
     public static int stage;
     public float timeCount = 0;
     public int bestScore = 0;
-    private int clearScore = 15000;
+    private int clearScore = 6000;
 
     // sql 인스턴스 변수
     IDataReader dbr;        //반환된 값 읽어주는 객체
