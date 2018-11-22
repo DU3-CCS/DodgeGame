@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Data;
 
 public class GameScoreSystem : MonoBehaviour {
-
+    public Text title;
     public Text Stage;        //체력 표시 UI
     public Text Best_Score;
     public Text Score;
@@ -23,7 +23,8 @@ public class GameScoreSystem : MonoBehaviour {
 
     // Use this for initialization
     void Start()
-    { 
+    {
+        title = GameObject.Find("Text_WindowTitle").GetComponent<Text>();
         Stage = GameObject.Find("Stage").GetComponent<Text>();
         Best_Score = GameObject.Find("Best_Score_Text").GetComponent<Text>();
         Score = GameObject.Find("Score_Text").GetComponent<Text>();
@@ -34,6 +35,7 @@ public class GameScoreSystem : MonoBehaviour {
         int revenueMoney;
         int clearCount;
 
+        if(score >= clearScore) { title.text = "Clear"; }
         Stage.text = "Stage " + stage;
         Score.text = score.ToString();
         Gold.text = gold + "G";
